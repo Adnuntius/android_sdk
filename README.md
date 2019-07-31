@@ -1,4 +1,9 @@
-# Adnuntius SDK 1.0 - Android
+# Adnuntius Android SDK
+
+Adnuntius Android SDK is an ios sdk which allows business partners to embed Adnuntius ads in their native android applications.
+
+## Integration
+
 - Add module `lib-release.aar` or `lib-debug.aar` to your project
 - In `MainActivity` inside method `OnCreate` inject Adnuntius config script
 ```java
@@ -22,3 +27,9 @@ AdView.adScript = "<html>\n" +
 ```
 
 - To update SDK copy and paste newer version inside lib-release or lib-debug folder in your project
+
+## Examples
+
+Some examples of using the SDK are available from https://github.com/Adnuntius/android_sdk_examples
+
+
