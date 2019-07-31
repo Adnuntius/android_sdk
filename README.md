@@ -30,6 +30,6 @@ AdView.adScript = "<html>\n" +
 
 ## Examples
 
-Some examples of using the SDK are available from https://github.com/Adnuntius/android_sdk_examples
+An example of using the SDK is available from https://github.com/Adnuntius/android_sdk_examples
 
 
