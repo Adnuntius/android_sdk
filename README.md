@@ -1,6 +1,6 @@
 # Adnuntius Android SDK
 
-Adnuntius Android SDK is an ios sdk which allows business partners to embed Adnuntius ads in their native android applications.
+Adnuntius Android SDK is an android sdk which allows business partners to embed Adnuntius ads in their native android applications.
 
 ## Integration
 
