@@ -1,6 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.adnuntius.sdk.lib" >
+    package="com.adnuntius.android.sdk" >
     <uses-permission android:name="android.permission.INTERNET" />
-    <application
-    android:usesCleartextTraffic="true"></application>
+    <application android:usesCleartextTraffic="true"></application>
 </manifest>
