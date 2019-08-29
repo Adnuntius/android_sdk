@@ -1,4 +1,4 @@
-package com.adnuntius.sdk.lib;
+package com.adnuntius.android.sdk;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;

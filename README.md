@@ -4,7 +4,13 @@ Adnuntius Android SDK is an android sdk which allows business partners to embed 
 
 ## Integration
 
-- Add module `lib-release.aar` or `lib-debug.aar` to your project
+Add a dependency to your build.gradle file:
+
+```
+compile 'com.adnuntius.android.sdk:1.1.4'
+```
+
+
 - In `MainActivity` inside method `onResume`:
 ```java
     private AdView webView;
@@ -33,7 +39,7 @@ Adnuntius Android SDK is an android sdk which allows business partners to embed 
 ```
 - Add implementation inside your xml layout file:
 ```xml
-<com.adnuntius.sdk.lib.AdView
+<com.adnuntius.android.sdk.AdView
         android:id="@+id/adView"
         android:layout_width="354dp"
         android:layout_height="244dp"
@@ -42,10 +48,6 @@ Adnuntius Android SDK is an android sdk which allows business partners to embed 
         tools:ignore="MissingConstraints" />
 ```
 
-- To update SDK copy and paste newer version inside lib-release or lib-debug folder in your project
-
 ## Examples
 
 Some examples of using the SDK are available from https://github.com/Adnuntius/android_sdk_examples
-
-
