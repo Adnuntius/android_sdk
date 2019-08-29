@@ -9,6 +9,8 @@ buildscript {
     }
 }
 
+apply plugin: "maven"
+
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
@@ -16,7 +18,7 @@ apply plugin: 'com.jfrog.bintray'
 def siteUrl = 'https://github.com/Adnuntius/android_sdk'
 def gitUrl = 'https://github.com/Adnuntius/android_sdk.git'
 
-version = "1.1.4"
+version = "1.1.5-SNAPSHOT"
 group = "com.adnuntius.android"
 
 android {
@@ -73,7 +75,9 @@ install {
 }
 
 dependencies {
-    implementation 'com.android.volley:volley:1.1.1'
+    implementation 'com.google.code.gson:gson:2.8.5'
+
+    testImplementation 'junit:junit:4.12'
 }
 
 task sourcesJar(type: Jar) {
@@ -107,8 +111,8 @@ bintray {
         publish = true
 
         version {
-            name = '1.1.4'
-            vcsTag = '1.1.4'
+            name = version
+            vcsTag = version
         }
     }
 }

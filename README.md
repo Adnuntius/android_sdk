@@ -7,11 +7,12 @@ Adnuntius Android SDK is an android sdk which allows business partners to embed 
 Add a dependency to your build.gradle file:
 
 ```
-compile 'com.adnuntius.android.sdk:1.1.4'
+compile 'com.adnuntius.android.sdk:1.1.5-SNAPSHOT'
 ```
 
+In the Activity class load the web view in the onCreate (after calling setContentView), and then 
+load the ad in the onResume, this will ensure that ads are reloaded when the app is paused and resumed:
 
-- In `MainActivity` inside method `onResume`:
 ```java
     private AdView webView;
 
@@ -26,18 +27,22 @@ compile 'com.adnuntius.android.sdk:1.1.4'
     @Override
     protected void onResume() {
        super.onResume();
-       String adScript = "<html>\n" +
-                        "        <head />\n" +
-                        "        <body>\n" +
-                        "        <div id=\"adn-0000000000000fe6\" style=\"display:none\"></div>\n" +
-                        "        <script type=\"text/javascript\">(function(d, s, e, t) { e = d.createElement(s); e.type = 'text/java' + s; e.async = 'async'; e.src = 'http' + ('https:' === location.protocol ? 's' : '') + '://cdn.adnuntius.com/adn.js'; t = d.getElementsByTagName(s)[0]; t.parentNode.insertBefore(e, t); })(document, 'script');window.adn = window.adn || {}; adn.calls = adn.calls || []; adn.calls.push(function() { adn.request({ adUnits: [ {auId: '0000000000000fe6', auW: 320, auH: 480 } ]}); });</script>\n" +
-                        "        </body>\n" +
-                        "        </html>";
-
-       webView.loadAdFromScript(adScript);
+       
+       AdConfig config = new AdConfig("0000000000023ae5")
+           .setHeight(webView.getHeight())
+           .setWidth(webView.getWidth())
+           .addKeyValue("car", "toyota")
+           .addKeyValue("car", "ford")
+           .addKeyValue("sport", "football")
+           .addCategory("sports")
+           .addCategory("casinos");
+       
+       webView.loadForConfig(config);
     }
 ```
-- Add implementation inside your xml layout file:
+
+Add adview inside your xml layout file:
+
 ```xml
 <com.adnuntius.android.sdk.AdView
         android:id="@+id/adView"

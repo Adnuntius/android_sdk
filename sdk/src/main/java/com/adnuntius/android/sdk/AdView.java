@@ -4,18 +4,8 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
-
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class AdView extends WebView {
     public AdView(Context context) {
@@ -37,39 +27,8 @@ public class AdView extends WebView {
         }
     }
 
-    public void loadAdFromScript(String adScript) {
+    public void loadForConfig(AdConfig config) {
+        String adScript = config.toScript();
         loadDataWithBaseURL("https://adnuntius.com/", adScript, "text/html", "UTF-8", null);
-    }
-
-    public void loadAdFromJson(String jsonConfig) {
-        try {
-            JSONObject config = new JSONObject(jsonConfig);
-
-            JsonObjectRequest jsonobj = new JsonObjectRequest(Request.Method.POST, "https://delivery.adnuntius.com/i?format=json", config,
-                    new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            try {
-                                JSONArray jArr = response.getJSONArray("adUnits");
-                                JSONObject ad = jArr.getJSONObject(0);
-                                loadAdFromScript(ad.getString("html"));
-                            } catch (Exception e) {
-                                Log.d("debug app", "Failed to parse json response", e);
-                            }
-                        }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Log.d("debug app", error.getMessage());
-                        }
-                    }
-            );
-
-            RequestQueueSingleton.getInstance(getContext()).addToRequestQueue(jsonobj);
-        } catch (JSONException e) {
-            // this is a parsing exception pure and simple so immediately throw it
-            throw new IllegalArgumentException(e);
-        }
     }
 }
