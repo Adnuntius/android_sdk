@@ -2,11 +2,15 @@ package com.adnuntius.android.sdk;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 public class AdnuntiusAdWebViewClient extends WebViewClient {
+    private static final String TAG = "AdnuntiusSDKWebView";
+
     private final Context context;
     private final CompletionHandler handler;
 
@@ -15,6 +19,7 @@ public class AdnuntiusAdWebViewClient extends WebViewClient {
         this.handler = handler;
     }
 
+    @Override
     public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest url) {
         if ("delivery.adnuntius.com".equals(url.getUrl().getHost())) {
             return false;
@@ -23,5 +28,20 @@ public class AdnuntiusAdWebViewClient extends WebViewClient {
         Intent intent = new Intent(Intent.ACTION_VIEW, url.getUrl());
         context.startActivity(intent);
         return true;
+    }
+
+    @Override
+    public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
+        if(request.getUrl().getPath().endsWith("/favicon.ico")) {
+            try {
+                return new WebResourceResponse("image/png", null, null);
+            } catch (Exception e) {
+            }
+        }
+        return null;
+    }
+
+    public void onLoadResource(WebView view, String url) {
+        Log.d(TAG, url);
     }
 }

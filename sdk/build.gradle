@@ -17,7 +17,7 @@ apply plugin: 'com.jfrog.bintray'
 def siteUrl = 'https://github.com/Adnuntius/android_sdk'
 def gitUrl = 'https://github.com/Adnuntius/android_sdk.git'
 
-version = "1.2.0"
+version = "1.2.1"
 group = "com.adnuntius.android"
 
 android {
@@ -108,11 +108,11 @@ bintray {
         githubReleaseNotesFile = 'README.md'
 
         licenses = ["Apache-2.0"]
-        publish = true
+        publish = false
 
         version {
-            name = version
-            vcsTag = version
+            name = version.toString()
+            vcsTag = version.toString()
         }
     }
 }

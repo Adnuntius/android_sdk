@@ -17,7 +17,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class AdnuntiusAdWebView extends WebView {
-
     private final CompletionHandlerWrapper wrapper = new CompletionHandlerWrapper();
 
     public AdnuntiusAdWebView(Context context) {
