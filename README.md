@@ -4,11 +4,24 @@ Adnuntius Android SDK is an android sdk which allows business partners to embed 
 
 ## Gradle Dependency
 
+For the moment we do not have our latest sdk deployed to jcenter() or mavenCentral(), this is something we are working on getting
+resolved asap.  For the moment you need to include our maven repo in your gradle config:
+
+```
+repositories {
+		mavenLocal()
+        maven {
+            url "https://dl.bintray.com/adnuntius/maven"
+        }
+        google()
+        jcenter()
+    }
+```
 
 Add a dependency to your build.gradle file:
 
 ```
-implementation 'com.adnuntius.android.sdk:1.2.0'
+implementation 'com.adnuntius.android.sdk:1.2.1'
 ```
 
 ## Add the AdnuntiusAdWebView to your xml layout file:

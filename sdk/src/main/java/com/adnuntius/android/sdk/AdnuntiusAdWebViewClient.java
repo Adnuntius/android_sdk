@@ -32,7 +32,9 @@ public class AdnuntiusAdWebViewClient extends WebViewClient {
 
     @Override
     public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
-        if(request.getUrl().getPath().endsWith("/favicon.ico")) {
+        if(request.getUrl() != null
+                && request.getUrl().getPath() != null
+                && request.getUrl().getPath().endsWith("/favicon.ico")) {
             try {
                 return new WebResourceResponse("image/png", null, null);
             } catch (Exception e) {
