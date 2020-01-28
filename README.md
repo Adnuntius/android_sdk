@@ -17,7 +17,7 @@ repositories {
 Add a dependency to your build.gradle file:
 
 ```
-implementation 'com.adnuntius.android.sdk:1.2.1'
+implementation 'com.adnuntius.android.sdk:1.2.2'
 ```
 
 ## Add the AdnuntiusAdWebView to your xml layout file:
