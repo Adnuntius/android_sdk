@@ -152,3 +152,8 @@ An example app which loads ads via all 3 load methods is available here: https:/
 
 This SDK is a work in progress and will be given attention when necessary based on feed back from business partners.  You
 can raise issues on github or via zendesk at https://admin.adnuntius.com
+
+## Releasing
+
+Releases are uploaded to bintray and onto jcenter using the bintray gradle plugin.
+
