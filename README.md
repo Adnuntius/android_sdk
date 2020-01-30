@@ -8,7 +8,6 @@ Our latest sdk is deployed to jcenter() only, so you need to ensure you include 
 
 ```
 repositories {
-        mavenCentral()
         google()
         jcenter()
     }
