@@ -4,19 +4,17 @@ Adnuntius Android SDK is an android sdk which allows business partners to embed 
 
 ## Gradle Dependency
 
-Our latest sdk is deployed to jcenter() only, so you need to ensure you include jcenter() in your repositories list:
-
 ```
 repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 ```
 
 Add a dependency to your build.gradle file:
 
 ```
-implementation 'com.adnuntius.android.sdk:1.2.2'
+implementation 'com.adnuntius.android.sdk:1.2.3'
 ```
 
 ## Add the AdnuntiusAdWebView to your xml layout file:
@@ -144,15 +142,10 @@ Skip adn.js and load the ad html direct from the ad server.
 
 ## Examples
 
-An example app which loads ads via all 3 load methods is available here: https://github.com/Adnuntius/android_sdk_examples/example
+An example app which loads ads via all 3 load methods is available here: https://github.com/Adnuntius/android_sdk_examples
 
 
 ## Bugs, Issues and Support
 
 This SDK is a work in progress and will be given attention when necessary based on feed back from business partners.  You
 can raise issues on github or via zendesk at https://admin.adnuntius.com
-
-## Releasing
-
-Releases are uploaded to bintray and onto jcenter using the bintray gradle plugin.
-
