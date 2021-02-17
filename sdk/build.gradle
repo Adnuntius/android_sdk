@@ -1,35 +1,22 @@
-buildscript {
-    repositories {
-        mavenCentral()
-        jcenter()
-        google()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.2'
-    }
-}
-
-apply plugin: "maven"
+apply plugin: 'maven'
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'com.jfrog.bintray'
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
 
-def siteUrl = 'https://github.com/Adnuntius/android_sdk'
-def gitUrl = 'https://github.com/Adnuntius/android_sdk.git'
-
-version = "1.2.3-SNAPSHOT"
-group = "com.adnuntius.android"
+version = "1.2.3"
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "28.0.3"
+    buildToolsVersion "29.0.2"
 
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 26
-        versionCode 3
         versionName version
+        versionCode Integer.valueOf(version.toString().replace('.', '').replace('-SNAPSHOT', ''))
 
+        buildConfigField "String", "VERSION_NAME", "\"$versionName\""
+        
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
@@ -41,32 +28,67 @@ android {
     }
 }
 
-install {
-    repositories.mavenInstaller {
-        pom {
-            project {
-                packaging 'aar'
+// https://developer.android.com/studio/build/maven-publish-plugin
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                groupId 'com.adnuntius.android'
+                artifactId 'sdk'
 
-                name 'Adnuntius Android SDK is an android sdk which allows business partners to embed Adnuntius ads in their native android applications.'
-                url siteUrl
+                from components.release
 
-                licenses {
-                    license {
-                        name 'The Apache Software License, Version 2.0'
-                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                pom {
+                    name = 'Adnuntius Android SDK'
+                    packaging = 'aar'
+                    description = 'Adnuntius Android SDK is an android sdk which allows business partners to embed Adnuntius ads in their native android applications.'
+                    url = 'http://www.example.com/example-application'
+
+                    scm {
+                        connection = 'scm:svn:https://github.com/Adnuntius/android_sdk.git'
+                        developerConnection = 'scm:svn:https://github.com/Adnuntius/android_sdk.git'
+                        url = 'https://github.com/Adnuntius/android_sdk'
+                    }
+
+                    licenses {
+                        license {
+                            name = 'The Apache License, Version 2.0'
+                            url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        }
+                    }
+
+                    organization {
+                        name = 'Adnuntius AS'
+                        url = 'https://adnuntius.com'
+                    }
+
+                    developers {
+                        developer {
+                            id = 'adnuntius'
+                            name = 'Adnuntius'
+                            email = 'ops@adnuntius.com'
+                        }
                     }
                 }
-                developers {
-                    developer {
-                        id 'adnuntius'
-                        name 'Adnuntius'
-                        email 'ops@adnuntius.com'
-                    }
+
+                artifact(sourceJar) {
+                    classifier = 'sources'
                 }
-                scm {
-                    connection gitUrl
-                    developerConnection gitUrl
-                    url siteUrl
+                artifact(javadocJar) {
+                    classifier = 'javadoc'
+                }
+            }
+        }
+
+        repositories {
+            maven {
+                def releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+                def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
+
+                url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+                credentials {
+                    username sonatypeUsername
+                    password sonatypePassword
                 }
             }
         }
@@ -80,39 +102,28 @@ dependencies {
     testImplementation 'junit:junit:4.12'
 }
 
-task sourcesJar(type: Jar) {
+task sourceJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
     archiveClassifier.set("sources")
 }
 
-artifacts {
-    archives sourcesJar
+task javadoc(type: Javadoc) {
+    failOnError false
+    source = android.sourceSets.main.java.srcDirs
 }
 
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    from javadoc.destinationDir
+    archiveClassifier.set("javadoc")
+}
 
-bintray {
-    user = properties.getProperty("bintray.user")
-    key = properties.getProperty("bintray.apikey")
+artifacts {
+    archives sourceJar
+    archives javadocJar
+}
 
-    configurations = ['archives']
-    pkg {
-        repo = "maven"
-        name = "sdk"
-        userOrg = 'adnuntius'
-        websiteUrl = siteUrl
-        vcsUrl = gitUrl
-
-        githubRepo = 'Adnuntius/android_sdk'
-        githubReleaseNotesFile = 'README.md'
-
-        licenses = ["Apache-2.0"]
-        publish = false
-
-        version {
-            name = "1.2.3-SNAPSHOT"
-            vcsTag = "1.2.3-SNAPSHOT"
-        }
+afterEvaluate {
+    signing {
+        sign publishing.publications.release
     }
 }
