@@ -4,7 +4,7 @@ Adnuntius Android SDK is an android sdk which allows business partners to embed 
 
 ## Gradle Dependency
 
-For the moment, the com.android.folly dependency is not on maven central, hopefully version 1.2.0 will be on maven central
+For the moment, the com.android.volly dependency is not on maven central, hopefully version 1.2.0 will be on maven central
 and we can remove the jcenter() repository dependency below.
 
 ```
