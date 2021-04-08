@@ -4,24 +4,17 @@ Adnuntius Android SDK is an android sdk which allows business partners to embed 
 
 ## Gradle Dependency
 
-For the moment, the com.android.volly dependency is not on maven central, hopefully version 1.2.0 will be on maven central
-and we can remove the jcenter() repository dependency below.
-
 ```
 repositories {
         google()
         mavenCentral()
-
-        // com.android.volley is not on maven central yet, looks like 1.2.0 will be
-        // but its not released as yet
-        jcenter()
     }
 ```
 
 Add a dependency to your build.gradle file:
 
 ```
-implementation 'com.adnuntius.android.sdk:1.2.3'
+implementation 'com.adnuntius.android.sdk:1.3.0'
 ```
 
 ## Add the AdnuntiusAdWebView to your xml layout file:
@@ -41,53 +34,10 @@ implementation 'com.adnuntius.android.sdk:1.2.3'
 In the Activity class load the web view in the onCreate (after calling setContentView), and then 
 load the ad in the onResume, this will ensure that ads are reloaded when the app is paused and resumed.
 
-The loadFromScript, loadFromConfig and loadFromApi all accept a CompletionHandler.  This completion handler callback
+The loadFromConfig and loadFromApi both accept a CompletionHandler.  This completion handler callback
 will be called asynchronously when the ad is either loaded into the webview or not, or when an error occurs.  Due to the
 nature of the Android webview implementation its possible to receive an onComplete() with an adCount > 0, but then
 receive a onFailure, in this case its most likely a configuration issue (your DIV id might be wrong for instance)
-
-### Load From Script
-
-Directly reference adn.js and provide a complete html page, maximum flexibility
-
-```java
-    private AduntiusAdWebView webView;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.activity_main);
-        this.webView = findViewById(R.id.adView);
-    }
-
-    @Override
-    protected void onResume() {
-       super.onResume();
-       String adScript = "<html>\n" +
-                        "        <head />\n" +
-                        "        <body>\n" +
-                        "        <div id=\"adn-0000000000000fe6\" style=\"display:none\"></div>\n" +
-                        "        <script type=\"text/javascript\">(function(d, s, e, t) { e = d.createElement(s); e.type = 'text/java' + s; e.async = 'async'; e.src = 'http' + ('https:' === location.protocol ? 's' : '') + '://cdn.adnuntius.com/adn.js'; t = d.getElementsByTagName(s)[0]; t.parentNode.insertBefore(e, t); })(document, 'script');window.adn = window.adn || {}; adn.calls = adn.calls || []; adn.calls.push(function() { adn.request({ adUnits: [ {auId: '0000000000000fe6', auW: 320, auH: 480 } ]}); });</script>\n" +
-                        "        </body>\n" +
-                        "        </html>";
-
-       webView.loadAdFromScript(adScript,
-       new CompletionHandler() {
-           @Override
-           public void onComplete(int adCount) {
-               if (adCount == 0) {
-                   // do something where no ad matches
-               }
-           }
-       
-           @Override
-           public void onFailure(String error) {
-              // do something on failure
-           }
-       });
-    }
-```
 
 ### Load From Config
 
@@ -149,7 +99,7 @@ Skip adn.js and load the ad html direct from the ad server.
 
 ## Examples
 
-An example app which loads ads via all 3 load methods is available here: https://github.com/Adnuntius/android_sdk_examples
+An example app which loads ads via both load methods is available here: https://github.com/Adnuntius/android_sdk_examples
 
 
 ## Bugs, Issues and Support
