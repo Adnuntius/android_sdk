@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.webkit.WebView;
 
 import com.android.volley.Request;
@@ -17,6 +16,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class AdnuntiusAdWebView extends WebView {
+    private static final String BASE_URL = "https://delivery.adnuntius.com/";
+
     private final CompletionHandlerWrapper wrapper = new CompletionHandlerWrapper();
 
     public AdnuntiusAdWebView(Context context) {
@@ -45,15 +46,11 @@ public class AdnuntiusAdWebView extends WebView {
     }
 
     public void loadFromConfig(final AdConfig config, final CompletionHandler handler) {
-        String adScript = config.toScript();
-        loadFromScript(adScript, handler);
-    }
-
-    public void loadFromScript(final String adScript, final CompletionHandler handler) {
         this.wrapper.setDelegate(handler);
 
+        String adScript = config.toScript();
         String shimmedAdScript = JsShimUtils.injectShim(adScript);
-        loadDataWithBaseURL("https://adnuntius.com/", shimmedAdScript, "text/html", "UTF-8", null);
+        loadDataWithBaseURL(BASE_URL, shimmedAdScript, "text/html", "UTF-8", null);
     }
 
     public void loadFromApi(final String jsonConfig, final CompletionHandler handler) {
@@ -73,7 +70,8 @@ public class AdnuntiusAdWebView extends WebView {
                                     JSONObject ad = jArr.getJSONObject(0);
                                     int adCount = ad.getInt("matchedAdCount");
                                     if (adCount > 0) {
-                                        loadFromScript(ad.getString("html"), handler);
+                                        String shimmedAdScript = JsShimUtils.injectShim(ad.getString("html"));
+                                        loadDataWithBaseURL(BASE_URL, shimmedAdScript, "text/html", "UTF-8", null);
                                         return;
                                     }
                                 }
