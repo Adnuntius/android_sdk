@@ -1,4 +1,4 @@
-package com.adnuntius.android.sdk;
+package com.adnuntius.android.sdk.http.volley;
 
 import android.content.Context;
 
@@ -6,9 +6,8 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
-
 // https://developer.android.com/training/volley/requestqueue
-public class RequestQueueSingleton {
+public class RequestQueueSingleton implements HttpRequestQueue {
     private static RequestQueueSingleton instance;
     private RequestQueue requestQueue;
 
@@ -17,7 +16,6 @@ public class RequestQueueSingleton {
     public RequestQueueSingleton(Context ctx) {
         this.ctx = ctx;
         requestQueue = getRequestQueue();
-
     }
 
     private RequestQueue getRequestQueue() {
@@ -36,7 +34,8 @@ public class RequestQueueSingleton {
         return instance;
     }
 
-    public <T> void addToRequestQueue(Request<T> req) {
+    @Override
+    public <T> void add(Request<T> req) {
         getRequestQueue().add(req);
     }
 }

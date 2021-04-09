@@ -1,6 +1,6 @@
-# Adnuntius Android SDK
+# Adnuntius SDK
 
-Adnuntius Android SDK is an android sdk which allows business partners to embed Adnuntius ads in their native android applications.
+Adnuntius Android SDK for Android enables embedded Ads and Adnuntius Data integration.
 
 ## Gradle Dependency
 
@@ -14,10 +14,14 @@ repositories {
 Add a dependency to your build.gradle file:
 
 ```
-implementation 'com.adnuntius.android.sdk:1.3.0'
+implementation 'com.adnuntius.android.sdk:1.4.0-SNAPSHOT'
 ```
 
-## Add the AdnuntiusAdWebView to your xml layout file:
+## Ad Delivery
+
+Embed ads into your app using the AdnuntiusAdWebView.
+
+### Add the AdnuntiusAdWebView to your xml layout file:
 
 ```xml
 <com.adnuntius.android.sdk.AdnuntiusAdWebView
@@ -29,19 +33,15 @@ implementation 'com.adnuntius.android.sdk:1.3.0'
         tools:ignore="MissingConstraints" />
 ```
 
-## Load Ad
+### Load Ad
 
 In the Activity class load the web view in the onCreate (after calling setContentView), and then 
 load the ad in the onResume, this will ensure that ads are reloaded when the app is paused and resumed.
 
-The loadFromConfig and loadFromApi both accept a CompletionHandler.  This completion handler callback
-will be called asynchronously when the ad is either loaded into the webview or not, or when an error occurs.  Due to the
-nature of the Android webview implementation its possible to receive an onComplete() with an adCount > 0, but then
-receive a onFailure, in this case its most likely a configuration issue (your DIV id might be wrong for instance)
+The loadFromConfig accepts a CompletionHandler.  This completion handler callback
+will be called asynchronously when the ad is either loaded into the webview or not, or when an error occurs.
 
-### Load From Config
-
-A very basic api for simple ad integrations, internally utilises adn.js
+A basic api for simple ad integrations, uses adn.js internally to render the ad and fire off all the right events.
 
 ```java
     @Override
@@ -69,40 +69,113 @@ A very basic api for simple ad integrations, internally utilises adn.js
     }
 ```
 
+#### Limitations
 
-### Load From Api
+The AdConfig class supports specifying a single ad unit, key values and categories only.
 
-Skip adn.js and load the ad html direct from the ad server.
+#### Gotchas
+
+Due to the nature of the Android webview implementation its possible to receive an onComplete() with an adCount > 0, but then
+receive an onFailure, in this case its most likely a configuration issue (your DIV id might be wrong for instance)
+
+### Examples
+
+An example app is available here: https://github.com/Adnuntius/android_sdk_examples
+
+## Adnuntius Data
+
+A new DataClient is available to generate sync, profile update (aka visitor) and page events to adnuntius data.
+
+Refer to https://docs.adnuntius.com/adnuntius-data/api-documentation/http
 
 ```java
-    @Override
-    protected void onResume() {
-        super.onResume();
-        
-        adView.loadFromApi("{\"adUnits\": [{\"auId\": \"000000000006f450\", \"kv\": [{\"version\":\"10\"}]}]}",
-        new CompletionHandler() {
-            @Override
-            public void onComplete(int adCount) {
-                if (adCount == 0) {
-                    // do something where no ad matches
-                }
-            }
-        
-            @Override
-            public void onFailure(String error) {
-               // do something on failure
-            }
-        });
-    }
+import com.adnuntius.android.sdk.data.DataClient;
+
+...
+
+final DataClient dataClient = new DataClient(getApplicationContext());
 ```
 
+### Sync Profile
 
-## Examples
+```java
+final Sync sync = new Sync();
+sync.setFolderId("000000000000009d");
+sync.setBrowserId("some browser id");
+sync.setExternalSystemIdentifier("SOME CRM SYSTEM", "some user id in crm SOME CRM SYSTEM");
 
-An example app which loads ads via both load methods is available here: https://github.com/Adnuntius/android_sdk_examples
+dataClient.sync(sync, new DataResponseHandler() {
+    @Override
+    public void onSuccess() {
+        // do something on success if necessary
+    }
 
+    @Override
+    public void onFailure(ErrorResponse response) {
+        // on failure, do something here
+    }
+});
+```
+
+### Visitor Profile Update
+
+#### Date and Timestamp API 25 gotchas
+
+If your application minSdkVersion is at least 26, you can use the setters which accept java.time.LocalDate or
+java.time.Instant.
+
+If your application minSdkVersion is before 26, you can use the setters which accept com.adnuntius.android.sdk.data.profile.LocalDate or
+com.adnuntius.android.sdk.data.profile.Instant compatibility classes.
+
+```java
+final Profile profile = new Profile();
+profile.setFolderId("some folder id");
+profile.setBrowserId("some browser id");
+profile.setExternalSystemIdentifier("SOME CRM SYSTEM", "some user id in crm SOME CRM SYSTEM");
+profile.setProfileValue(ProfileFields.company, "Adnuntius");
+profile.setProfileValue(ProfileFields.country, "Norway");
+profile.setProfileValue(ProfileFields.dateOfBirth, LocalDate.now());
+profile.setProfileValue(ProfileFields.createdAt, Instant.now());
+
+dataClient.visitor(profile, new DataResponseHandler() {
+    @Override
+    public void onSuccess() {
+        // do something on success if necessary
+    }
+
+    @Override
+    public void onFailure(ErrorResponse response) {
+        // on failure, do something here
+    }
+});
+```
+
+### Page View
+
+If you use the constructor which accepts a page url, the domainName and url path categories
+will be derived.   If you want to handle this yourself, use the setDomainName and addCategories
+methods directly.
+
+```java
+final Page page = new Page("the page url");
+page.setBrowserId("some browser id");
+page.setFolderId("some folder id");
+page.addCategories("minecraft", "doom");
+page.addKeywords("wood", "plastic");
+dataClient.page(page, new DataResponseHandler() {
+    @Override
+    public void onSuccess() {
+        // do something on success if necessary
+    }
+
+    @Override
+    public void onFailure(ErrorResponse response) {
+        // on failure, do something here
+    }
+});
+```
 
 ## Bugs, Issues and Support
 
 This SDK is a work in progress and will be given attention when necessary based on feed back from business partners.  You
-can raise issues on github or via zendesk at https://admin.adnuntius.com
+can raise issues on github or via zen desk at https://admin.adnuntius.com
