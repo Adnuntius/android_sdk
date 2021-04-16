@@ -184,3 +184,8 @@ dataClient.page(page, new DataResponseHandler() {
 
 This SDK is a work in progress and will be given attention when necessary based on feed back from business partners.  You
 can raise issues on github or via zen desk at https://admin.adnuntius.com
+
+# License
+
+This project uses the Apache 2 License.  Refer to the LICENSE file.
+
