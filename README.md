@@ -182,7 +182,7 @@ dataClient.page(page, new DataResponseHandler() {
 
 ## Bugs, Issues and Support
 
-This SDK is a work in progress and will be given attention when necessary based on feed back from business partners.  You
+This SDK is a work in progress and will be given attention when necessary based on feed back.  You
 can raise issues on github or via zen desk at https://admin.adnuntius.com
 
 # License
