@@ -62,7 +62,7 @@ public class DataClientTest {
         profile.setBrowserId("adasd21312321");
         profile.setProfileValue(ProfileFields.company, "Adnuntius");
         profile.setProfileValue(ProfileFields.country, "Norway");
-        profile.setProfileValue(ProfileFields.dateOfBirth, LocalDate.now());
+        profile.setProfileValue(ProfileFields.dateOfBirth, LocalDate.of(1994, 2, 14));
         profile.setProfileValue(ProfileFields.createdAt, Instant.now());
         testRequest(profile);
     }

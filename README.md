@@ -139,7 +139,7 @@ profile.setBrowserId("some browser id");
 profile.setExternalSystemIdentifier("SOME CRM SYSTEM", "some user id in crm SOME CRM SYSTEM");
 profile.setProfileValue(ProfileFields.company, "Adnuntius");
 profile.setProfileValue(ProfileFields.country, "Norway");
-profile.setProfileValue(ProfileFields.dateOfBirth, LocalDate.now());
+profile.setProfileValue(ProfileFields.dateOfBirth, LocalDate.of(1994, 2, 14));
 profile.setProfileValue(ProfileFields.createdAt, Instant.now());
 
 dataClient.profile(profile, new DataResponseHandler() {
