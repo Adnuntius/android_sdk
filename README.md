@@ -122,7 +122,7 @@ dataClient.sync(sync, new DataResponseHandler() {
 });
 ```
 
-### Visitor Profile Update
+### Profile Update
 
 #### Date and Timestamp API 25 gotchas
 
