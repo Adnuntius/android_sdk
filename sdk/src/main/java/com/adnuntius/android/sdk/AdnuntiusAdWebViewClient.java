@@ -8,24 +8,30 @@ import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.adnuntius.android.sdk.http.HttpUtils;
+
 public class AdnuntiusAdWebViewClient extends WebViewClient {
     private static final String TAG = "AdnuntiusSDKWebView";
 
     private final Context context;
     private final CompletionHandler handler;
+    private final AdnuntiusEnvironment env;
+    private final String deliveryUrl;
 
-    public AdnuntiusAdWebViewClient(final Context context, final CompletionHandler handler) {
+    public AdnuntiusAdWebViewClient(final Context context, final AdnuntiusEnvironment env, final CompletionHandler handler) {
         this.context = context;
+        this.env = env;
+        this.deliveryUrl = HttpUtils.getDeliveryUrl(env);
         this.handler = handler;
     }
 
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest url) {
-        if ("delivery.adnuntius.com".equals(url.getUrl().getHost())) {
+        if (deliveryUrl.equals(url.getUrl().getHost())) {
             return false;
         }
 
-        Intent intent = new Intent(Intent.ACTION_VIEW, url.getUrl());
+        final Intent intent = new Intent(Intent.ACTION_VIEW, url.getUrl());
         context.startActivity(intent);
         return true;
     }

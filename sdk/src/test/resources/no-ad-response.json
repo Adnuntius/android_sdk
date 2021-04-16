@@ -1,0 +1,26 @@
+{
+
+  "adUnits": [
+
+    {
+      "auId": "0000000000000081",
+      "targetId": "adn-0000000000000081",
+      "html": "\u003C!DOCTYPE html\u003E\n\u003Chtml\u003E\n\u003Chead\u003E\n    \u003Cmeta charset=\"utf-8\"\u003E\n    \u003Cstyle type=\"text/css\" media=\"all\"\u003E\n        html, body, .responseCtr {\n            margin: 0;\n            padding: 0;\n            outline: 0;\n            border: 0;\n            overflow: hidden;\n        }\n\n        .responseCtr {\n            display: inline-block;\n            line-height: 0;\n            vertical-align: top;\n        }\n\n        .responseCtr a {\n            line-height: 0;\n        }\n\n        .responseCtr *, .responseCtr a * {\n            line-height: normal;\n        }\n\n        .responseCtr .contentWrapperPerItem {\n            margin: 0;\n            padding: 0;\n            outline: 0;\n            border: 0;\n            display: inline-block;\n            line-height: 0;\n            vertical-align: top;\n        }\n\n        a img {\n            border: none;\n            outline: none;\n        }\n\n        img {\n            margin: 0;\n            padding: 0;\n        }\n\n        /* need this displayNone class to ensure images are preloaded for smooth transition */\n        img.displayNone {\n            position: absolute;\n            top: -99999px;\n            left: -99999px;\n        }\n\n        .contentWrapperTrailer {\n            clear: both;\n        }\n    \u003C/style\u003E\n    \u003Cscript type=\"text/javascript\" src=\"https://cdn.adnuntius.com/adn.js\"\u003E\u003C/script\u003E\n\u003C/head\u003E\n\u003Cbody\u003E\n\u003Cdiv id=\"\" class=\"responseCtr\"\u003E\n\n\u003C/div\u003E\n\u003Cscript type=\"text/javascript\"\u003E\n//\u003C![CDATA[\n(function() {\n    window.adn = window.adn || {};\n    adn.calls = adn.calls || [];\n    adn.calls.push(function() {\n        adn.inIframe.processAdResponse({ matchedAdCount: 0 });\n    });\n})();\n//]]\u003E\n\u003C/script\u003E\u003C/body\u003E\n\u003C/html\u003E",
+      "matchedAdCount": 0,
+      "responseId": "",
+
+      "rts": []
+    }
+  ],
+  "metaData": {
+
+    "usi": "48a60fc97ab086e01cda85cceef77d7a",
+
+    "sessionId": "20ee7ee8d2d06f76502bf503899f6266"
+
+  },
+  "duplicateFilter": "AAAAAAAAAAA=",
+  "segments": [],
+  "keywords": ["test.html"]
+
+}

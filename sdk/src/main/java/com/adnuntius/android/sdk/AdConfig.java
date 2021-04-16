@@ -1,14 +1,12 @@
 package com.adnuntius.android.sdk;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 
 public class AdConfig {
     private final String auId;
@@ -23,6 +21,10 @@ public class AdConfig {
 
     public AdConfig(final String auId) {
         this.auId = auId;
+    }
+
+    public String getAuId() {
+        return auId;
     }
 
     public AdConfig setWidth(String auW) {
@@ -63,32 +65,16 @@ public class AdConfig {
         return this;
     }
 
+    @Deprecated
     public AdConfig addCategory(String category) {
-        if (categories == null) {
-            categories = new ArrayList<>();
-        }
-        categories.add(category);
-        return this;
+        return addCategories(category);
     }
 
-    public String toScript() {
-        Gson gson = new GsonBuilder().create();
-        String objJson = gson.toJson(this).replace('"', '\'');
-
-        final String message = "<html>\n" +
-                "<head>\n" +
-                "   <script type=\"text/javascript\" src=\"https://cdn.adnuntius.com/adn.js\" async></script>\n" +
-                "</head>\n" +
-                "   <body>\n" +
-                "       <div id=\"adn-" + auId + "\" style=\"display:none\"></div>\n" +
-                "       <script type=\"text/javascript\">\n" +
-                "           window.adn = window.adn || {}; adn.calls = adn.calls || [];\n" +
-                "           adn.calls.push(function() {\n" +
-                "               adn.request({ adUnits: [" + objJson + "]});\n" +
-                "           });\n" +
-                "       </script>" +
-                "   </body>\n" +
-                "</html>";
-        return message;
+    public AdConfig addCategories(String ... categories) {
+        if (this.categories == null) {
+            this.categories = new ArrayList<>();
+        }
+        Collections.addAll(this.categories, categories);
+        return this;
     }
 }

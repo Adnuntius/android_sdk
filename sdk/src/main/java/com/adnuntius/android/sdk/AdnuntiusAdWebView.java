@@ -6,37 +6,54 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.webkit.WebView;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.adnuntius.android.sdk.http.ErrorResponse;
+import com.adnuntius.android.sdk.http.HttpClient;
+import com.adnuntius.android.sdk.http.HttpResponseHandler;
+import com.adnuntius.android.sdk.http.HttpUtils;
+import com.adnuntius.android.sdk.http.volley.VolleyHttpClient;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 
 public class AdnuntiusAdWebView extends WebView {
-    private static final String BASE_URL = "https://delivery.adnuntius.com/";
 
+
+    private final Gson gson;
     private final CompletionHandlerWrapper wrapper = new CompletionHandlerWrapper();
+    private final HttpClient httpClient;
+    private final AdnuntiusEnvironment env;
+    private final String deliveryUrl;
 
-    public AdnuntiusAdWebView(Context context) {
-        super(context);
+    public AdnuntiusAdWebView(final Context context) {
+        this(context,null);
     }
 
-    public AdnuntiusAdWebView(Context context, AttributeSet attrs) {
+    public AdnuntiusAdWebView(final Context context, final AttributeSet attrs) {
+        this(context, attrs, new VolleyHttpClient(context), AdnuntiusEnvironment.production);
+    }
+
+    public AdnuntiusAdWebView(final Context context,
+                              final AttributeSet attrs,
+                              final HttpClient httpClient,
+                              final AdnuntiusEnvironment env) {
         super(context, attrs);
+
+        this.env = env;
+        this.deliveryUrl = HttpUtils.getDeliveryUrl(env);
+
+        this.httpClient = httpClient;
+        this.gson = new GsonBuilder().create();
 
         this.getSettings().setJavaScriptEnabled(true);
         this.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         this.getSettings().setDomStorageEnabled(true);
         this.getSettings().setAllowFileAccess(false);
-        AdnuntiusAdWebViewClient webClient = new AdnuntiusAdWebViewClient(context, wrapper);
+        AdnuntiusAdWebViewClient webClient = new AdnuntiusAdWebViewClient(context, env, wrapper);
         this.setWebViewClient(webClient);
         AdnuntiusAdWebViewChromeClient chromeClient = new AdnuntiusAdWebViewChromeClient(wrapper);
         this.setWebChromeClient(chromeClient);
 
-        this.addJavascriptInterface(new AdnuntiusJavascriptCallback(wrapper), "adnuntius");
+        this.addJavascriptInterface(new AdnuntiusJavascriptCallback(env, wrapper), "adnuntius");
 
         // https://stackoverflow.com/a/23844693
         boolean isDebuggable = ( 0 != ( context.getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE ) );
@@ -48,52 +65,54 @@ public class AdnuntiusAdWebView extends WebView {
     public void loadFromConfig(final AdConfig config, final CompletionHandler handler) {
         this.wrapper.setDelegate(handler);
 
-        String adScript = config.toScript();
-        String shimmedAdScript = JsShimUtils.injectShim(adScript);
-        loadDataWithBaseURL(BASE_URL, shimmedAdScript, "text/html", "UTF-8", null);
+        final String jsJsonConfigString = gson.toJson(config).replace('"', '\'');
+        final String adScript = AdUtils.getAdScript(config.getAuId(), jsJsonConfigString);
+        final String shimmedAdScript = AdUtils.injectShim(adScript);
+         loadDataWithBaseURL(deliveryUrl, shimmedAdScript, "text/html", "UTF-8", null);
     }
 
+    /**
+     * This method of loading ads into the web view is deprecated, because it does not have all the
+     * smarts of loadFromConfig which relies on adn.js
+     *
+     * @param jsonConfig
+     * @param handler
+     */
+    @Deprecated
     public void loadFromApi(final String jsonConfig, final CompletionHandler handler) {
         this.wrapper.setDelegate(handler);
 
-        try {
-            JSONObject config = new JSONObject(jsonConfig);
+        httpClient.postJsonRequest(deliveryUrl + "/i?format=json&sdk=android:" + BuildConfig.VERSION_NAME,
+            jsonConfig,
+            new HttpResponseHandler() {
+                @Override
+                public void onFailure(final ErrorResponse message) {
+                    handler.onFailure(message.getMessage());
+                }
 
-            final JsonObjectRequest jsonobj = new JsonObjectRequest(
-                    Request.Method.POST, "https://delivery.adnuntius.com/i?format=json&sdk=android:" + BuildConfig.VERSION_NAME, config,
-                    new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            try {
-                                JSONArray jArr = response.getJSONArray("adUnits");
-                                if (jArr.length() > 0) {
-                                    JSONObject ad = jArr.getJSONObject(0);
-                                    int adCount = ad.getInt("matchedAdCount");
-                                    if (adCount > 0) {
-                                        String shimmedAdScript = JsShimUtils.injectShim(ad.getString("html"));
-                                        loadDataWithBaseURL(BASE_URL, shimmedAdScript, "text/html", "UTF-8", null);
-                                        return;
-                                    }
-                                }
-                            } catch (Exception e) {
-                                // going assume there was nothing returned and treat as no ad
-                            }
+                @Override
+                public void onSuccess(final String response) {
+                    try {
+                        final JsonObject responseJson = gson.fromJson(response, JsonObject.class);
+                        final AdUtils.AdResponse adScript = AdUtils.getAdFromDeliveryResponse(responseJson);
+                        if (adScript != null) {
+                            final String shimmedAdScript = AdUtils.injectShim(adScript.getHtml());
+                            loadDataWithBaseURL(deliveryUrl, shimmedAdScript, "text/html", "UTF-8", null);
 
-                            handler.onComplete(0);
+                            // its a bit odd, but because we already did the /i above we should trigger the oncomplete now
+                            handler.onComplete(adScript.getAdCount());
+                            return;
                         }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            handler.onFailure(error.getMessage());
-                        }
+                    } catch (final Exception e) {
+                        // going assume there was nothing returned and treat as no ad
                     }
-            );
 
-            RequestQueueSingleton.getInstance(getContext()).addToRequestQueue(jsonobj);
-        } catch (JSONException e) {
-            // this is a parsing exception pure and simple so immediately throw it
-            throw new IllegalArgumentException(e);
-        }
+                    // no ad returned
+                    handler.onComplete(0);
+                }
+            }
+            );
     }
+
+
 }

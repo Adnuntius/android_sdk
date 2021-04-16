@@ -1,6 +1,27 @@
 package com.adnuntius.android.sdk;
 
-public final class JsShimUtils {
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
+public final class AdUtils {
+    public static class AdResponse {
+        private final String html;
+        private final int adCount;
+
+        public AdResponse(final String html, final int adCount) {
+            this.html = html;
+            this.adCount = adCount;
+        }
+
+        public String getHtml() {
+            return html;
+        }
+
+        public int getAdCount() {
+            return adCount;
+        }
+    }
+
     private static final String JS_SHIM =
         "var adnSdkShim = new Object();\n" +
         "adnSdkShim.reallyOpen = XMLHttpRequest.prototype.open;\n" +
@@ -49,30 +70,59 @@ public final class JsShimUtils {
         "   return totalCount\n" +
         "}";
 
-    private JsShimUtils() {
+    private AdUtils() {
     }
 
     public static String injectShim(final String script) {
-        String tmpScript = script
+        final String tmpScript = script
                 .replaceAll("<head\\s*/>", "<head></head>");
 
         int indexOf = tmpScript.indexOf("<head");
         if (indexOf != -1) {
 
-            int endIndexOf = tmpScript.indexOf(">", indexOf);
-            String startScript = tmpScript.substring(0, endIndexOf + 1);
-            String endScript = tmpScript.substring(endIndexOf + 2);
+            final int endIndexOf = tmpScript.indexOf(">", indexOf);
+            final String startScript = tmpScript.substring(0, endIndexOf + 1);
+            final String endScript = tmpScript.substring(endIndexOf + 2);
             return startScript + "\n<script type=\"text/javascript\">\n" + JS_SHIM + "\n</script>\n" + endScript;
         } else {
             indexOf = tmpScript.indexOf("<html");
             if (indexOf != -1) {
                 int endIndexOf = tmpScript.indexOf(">", indexOf);
-                String startScript = tmpScript.substring(0, endIndexOf + 1);
-                String endScript = tmpScript.substring(endIndexOf + 2);
+                final String startScript = tmpScript.substring(0, endIndexOf + 1);
+                final String endScript = tmpScript.substring(endIndexOf + 2);
                 return startScript + "\n<head>\n<script type=\"text/javascript\">\n" + JS_SHIM + "\n</script>\n</head>\n" + endScript;
             } else {
                 throw new IllegalArgumentException("Invalid script");
             }
         }
+    }
+
+    public static String getAdScript(final String auId, final String jsJsonConfigString) {
+        return "<html>\n" +
+                "<head>\n" +
+                "   <script type=\"text/javascript\" src=\"https://cdn.adnuntius.com/adn.js\" async></script>\n" +
+                "</head>\n" +
+                "   <body>\n" +
+                "       <div id=\"adn-" + auId + "\" style=\"display:none\"></div>\n" +
+                "       <script type=\"text/javascript\">\n" +
+                "           window.adn = window.adn || {}; adn.calls = adn.calls || [];\n" +
+                "           adn.calls.push(function() {\n" +
+                "               adn.request({ adUnits: [" + jsJsonConfigString + "]});\n" +
+                "           });\n" +
+                "       </script>" +
+                "   </body>\n" +
+                "</html>";
+    }
+
+    public static AdResponse getAdFromDeliveryResponse(JsonObject response) {
+        final JsonArray jArr = response.getAsJsonArray("adUnits");
+        if (jArr.size() > 0) {
+            final JsonObject ad = jArr.get(0).getAsJsonObject();
+            final int adCount = ad.getAsJsonPrimitive("matchedAdCount").getAsInt();
+            if (adCount > 0) {
+                return new AdResponse(ad.getAsJsonPrimitive("html").getAsString(), adCount);
+            }
+        }
+        return null;
     }
 }
