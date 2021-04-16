@@ -142,7 +142,7 @@ profile.setProfileValue(ProfileFields.country, "Norway");
 profile.setProfileValue(ProfileFields.dateOfBirth, LocalDate.now());
 profile.setProfileValue(ProfileFields.createdAt, Instant.now());
 
-dataClient.visitor(profile, new DataResponseHandler() {
+dataClient.profile(profile, new DataResponseHandler() {
     @Override
     public void onSuccess() {
         // do something on success if necessary
