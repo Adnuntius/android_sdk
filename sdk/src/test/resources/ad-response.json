@@ -1,26 +1,67 @@
 {
-
   "adUnits": [
-
     {
-      "auId": "0000000000000077",
-      "targetId": "adn-0000000000000077",
-      "html": "\u003C!DOCTYPE html\u003E\n\u003Chtml\u003E\n\u003Chead\u003E\n    \u003Cmeta charset=\"utf-8\"\u003E\n    \u003Cstyle type=\"text/css\" media=\"all\"\u003E\n        html, body, .responseCtr {\n            margin: 0;\n            padding: 0;\n            outline: 0;\n            border: 0;\n            overflow: hidden;\n        }\n\n        .responseCtr {\n            display: inline-block;\n            line-height: 0;\n            vertical-align: top;\n        }\n\n        .responseCtr a {\n            line-height: 0;\n        }\n\n        .responseCtr *, .responseCtr a * {\n            line-height: normal;\n        }\n\n        .responseCtr .contentWrapperPerItem {\n            margin: 0;\n            padding: 0;\n            outline: 0;\n            border: 0;\n            display: inline-block;\n            line-height: 0;\n            vertical-align: top;\n        }\n\n        a img {\n            border: none;\n            outline: none;\n        }\n\n        img {\n            margin: 0;\n            padding: 0;\n        }\n\n        /* need this displayNone class to ensure images are preloaded for smooth transition */\n        img.displayNone {\n            position: absolute;\n            top: -99999px;\n            left: -99999px;\n        }\n\n        .contentWrapperTrailer {\n            clear: both;\n        }\n    \u003C/style\u003E\n    \u003Cscript type=\"text/javascript\" src=\"https://cdn.adnuntius.com/adn.js\"\u003E\u003C/script\u003E\n\u003C/head\u003E\n\u003Cbody\u003E\n\u003Cdiv id=\"adn-rsp-1939240598\" class=\"responseCtr\"\u003E\n\u003Cdiv class=\"contentWrapperPerItem\" id=\"adn-id-1028981212\" data-line-item-id=\"jw6ktchs9cth2r9q\" data-creative-id=\"35khhpsnxz801t9c\" data-response-token=\"l_nWdIqckA9TwXLxNQRrjBvIzGwjW3nvtPnB3K_26ngAAAAQCtjQz9kbGWD4nuZy3q6HaDgRiU3gLPCn4i_BKrFlcfGO51f65_P7oawahOLMWPVY6H5LfYnUd23lFr6USK2fVrAHZKn10ixHFNNVvSrG-h1dn9k6TcvW5DeO15Sqrib7N79-rTzGSPRLzcJDTHyqZiDuyakdPSHO7-4X1DZt_li-pb6fMFDlyqjrW_WMMn5rFtTmh4bnrG-T7BWnyJYElN7LuVl_JJxK78yI_PqVtutiZdoZ53LoDjnHm4RBqevwejrEew\"\u003E\u003Ca rel=\"nofollow\" target=\"_top\" href=\"https://adserver.dev.adnuntius.com/c/l_nWdIqckA9TwXLxNQRrjBvIzGwjW3nvtPnB3K_26ngAAAAQCtjQz9kbGWD4nuZy3q6HaDgRiU3gLPCn4i_BKrFlcfGO51f65_P7oawahOLMWPVY6H5LfYnUd23lFr6USK2fVrAHZKn10ixHFNNVvSrG-h1dn9k6TcvW5DeO15Sqrib7N79-rTzGSPRLzcJDTHyqZiDuyakdPSHO7-4X1DZt_li-pb6fMFDlyqjrW_WMMn5rFtTmh4bnrG-T7BWnyJYElN7LuVl_JJxK78yI_PqVtutiZdoZ53LoDjnHm4RBqevwejrEew?ct=81\u0026r=http%3A%2F%2Fwww.example.com\"\u003E\u003Cimg src=\"//assets.dev.adnuntius.com/4NBFhhWQo6h0DbNa5E_q79DS6dIBF2r14BtTT8BUu_s.png\" width=\"200\" height=\"200\" alt=\"\"/\u003E\u003C/a\u003E\u003Cdiv class=\"contentWrapperTrailer\"\u003E\u003C/div\u003E\u003C/div\u003E\n\u003C/div\u003E\n\u003Cscript type=\"text/javascript\"\u003E\n//\u003C![CDATA[\n(function() {\n    window.adn = window.adn || {};\n    adn.calls = adn.calls || [];\n    adn.calls.push(function() {\n        adn.inIframe.processAdResponse({ matchedAdCount: 1 });\n    });\n})();\n//]]\u003E\n\u003C/script\u003E\u003C/body\u003E\n\u003C/html\u003E",
+      "auId": "000000000006f450",
+      "targetId": "",
+      "html": "\u003C!DOCTYPE html\u003E\n\u003Chtml\u003E\n\u003Chead\u003E\n    \u003Cmeta charset=\"utf-8\"\u003E\n    \u003Cstyle type=\"text/css\" media=\"all\"\u003E\n        html, body, .responseCtr {\n            margin: 0;\n            padding: 0;\n            outline: 0;\n            border: 0;\n            overflow: hidden;\n        }\n\n        .responseCtr {\n            display: inline-block;\n            line-height: 0;\n            vertical-align: top;\n        }\n\n        .responseCtr a {\n            line-height: 0;\n        }\n\n        .responseCtr *, .responseCtr a * {\n            line-height: normal;\n        }\n\n        .responseCtr .contentWrapperPerItem {\n            margin: 0;\n            padding: 0;\n            outline: 0;\n            border: 0;\n            display: inline-block;\n            line-height: 0;\n            vertical-align: top;\n        }\n\n        a img {\n            border: none;\n            outline: none;\n        }\n\n        img {\n            margin: 0;\n            padding: 0;\n        }\n\n        /* need this displayNone class to ensure images are preloaded for smooth transition */\n        img.displayNone {\n            position: absolute;\n            top: -99999px;\n            left: -99999px;\n        }\n\n        .contentWrapperTrailer {\n            clear: both;\n        }\n    \u003C/style\u003E\n    \u003Cscript type=\"text/javascript\" src=\"https://cdn.adnuntius.com/adn.js\"\u003E\u003C/script\u003E\n\u003C/head\u003E\n\u003Cbody\u003E\n\u003Cdiv id=\"adn-rsp-418842580\" class=\"responseCtr\"\u003E\n\u003Cdiv class=\"contentWrapperPerItem\" id=\"adn-id-728395858\" data-line-item-id=\"7pmy5r9rj62fyhjm\" data-creative-id=\"yxxxlpw6vqhk1jv8\" data-response-token=\"zn4mKj5LB7UjGcCXPlHSM-51p2-ZDkCoG3Icrb5W_HwAAAAQCtjQz9kbGWD4nuZy3q6HaHGLA9z9__vBVRDVP7yPKtv4ph1WPgX7Us3dwae7Ey0ezV-AewQF5wO1mUU1Ii4df2bxPY6y6wkuLkxHfyTTwRN9eOP4HtOQ--Rhbo1hTz5zWJRBVIxPqRU6s7zHVe_Gv7nOGRqWbGTJMhuQCRwpxaOe90VUC-CKNbMvB6NuJ8fME3t6pzPLNL4dQ_c\"\u003E\u003Ca rel=\"nofollow\" target=\"_top\" href=\"https://delivery.adnuntius.com/c/zn4mKj5LB7UjGcCXPlHSM-51p2-ZDkCoG3Icrb5W_HwAAAAQCtjQz9kbGWD4nuZy3q6HaHGLA9z9__vBVRDVP7yPKtv4ph1WPgX7Us3dwae7Ey0ezV-AewQF5wO1mUU1Ii4df2bxPY6y6wkuLkxHfyTTwRN9eOP4HtOQ--Rhbo1hTz5zWJRBVIxPqRU6s7zHVe_Gv7nOGRqWbGTJMhuQCRwpxaOe90VUC-CKNbMvB6NuJ8fME3t6pzPLNL4dQ_c?ct=2501\u0026r=https%3A%2F%2Fgithub.com%2FAdnuntius%2Fios_sdk\"\u003E\u003Cimg src=\"https://assets.adnuntius.com/5M4OcUvJEArD4Tegb3Zc4XdOECv8zemyCi3yFmjgK-U.jpg\" width=\"300\" height=\"160\" alt=\"\"/\u003E\u003C/a\u003E\u003Cdiv class=\"contentWrapperTrailer\"\u003E\u003C/div\u003E\u003C/div\u003E\n\u003C/div\u003E\u003Ciframe src=\"https://delivery.adnuntius.com/b/zn4mKj5LB7UjGcCXPlHSM-51p2-ZDkCoG3Icrb5W_HwAAAAQCtjQz9kbGWD4nuZy3q6HaHGLA9z9__vBVRDVP7yPKtv4ph1WPgX7Us3dwae7Ey0ezV-AewQF5wO1mUU1Ii4df2bxPY6y6wkuLkxHfyTTwRN9eOP4HtOQ--Rhbo1hTz5zWJRBVIxPqRU6s7zHVe_Gv7nOGRqWbGTJMhuQCRwpxaOe90VUC-CKNbMvB6NuJ8fME3t6pzPLNL4dQ_c.html\" scrolling=\"no\" frameborder=\"0\" width=\"1\" height=\"1\" style=\"position:absolute;top:-10000px;left:-100000px;\"\u003E\u003C/iframe\u003E\n\u003Cscript type=\"text/javascript\"\u003E\n//\u003C![CDATA[\n(function() {\n    window.adn = window.adn || {};\n    adn.calls = adn.calls || [];\n    adn.calls.push(function() {\n        adn.inIframe.processAdResponse({ matchedAdCount: 1 });\n    });\n})();\n//]]\u003E\n\u003C/script\u003E\u003C/body\u003E\n\u003C/html\u003E",
       "matchedAdCount": 1,
-      "responseId": "adn-rsp-1939240598",
-
-      "rts": ["l_nWdIqckA9TwXLxNQRrjBvIzGwjW3nvtPnB3K_26ngAAAAQCtjQz9kbGWD4nuZy3q6HaDgRiU3gLPCn4i_BKrFlcfGO51f65_P7oawahOLMWPVY6H5LfYnUd23lFr6USK2fVrAHZKn10ixHFNNVvSrG-h1dn9k6TcvW5DeO15Sqrib7N79-rTzGSPRLzcJDTHyqZiDuyakdPSHO7-4X1DZt_li-pb6fMFDlyqjrW_WMMn5rFtTmh4bnrG-T7BWnyJYElN7LuVl_JJxK78yI_PqVtutiZdoZ53LoDjnHm4RBqevwejrEew"]
+      "responseId": "adn-rsp-418842580",
+      "ads": [
+        {
+          "destinationUrlEsc": "https%3A%2F%2Fdelivery.adnuntius.com%2Fc%2Fzn4mKj5LB7UjGcCXPlHSM-51p2-ZDkCoG3Icrb5W_HwAAAAQCtjQz9kbGWD4nuZy3q6HaHGLA9z9__vBVRDVP7yPKtv4ph1WPgX7Us3dwae7Ey0ezV-AewQF5wO1mUU1Ii4df2bxPY6y6wkuLkxHfyTTwRN9eOP4HtOQ--Rhbo1hTz5zWJRBVIxPqRU6s7zHVe_Gv7nOGRqWbGTJMhuQCRwpxaOe90VUC-CKNbMvB6NuJ8fME3t6pzPLNL4dQ_c%3Fct%3D2501%26r%3Dhttps%253A%252F%252Fgithub.com%252FAdnuntius%252Fios_sdk",
+          "assets": {
+            "Image": {
+              "cdnId": "https://assets.adnuntius.com/5M4OcUvJEArD4Tegb3Zc4XdOECv8zemyCi3yFmjgK-U.jpg","width": "300",
+              "height": "160"
+            }
+          },
+          "text": {
+          },
+          "choices": {
+          },
+          "clickUrl": "https://delivery.adnuntius.com/c/zn4mKj5LB7UjGcCXPlHSM-51p2-ZDkCoG3Icrb5W_HwAAAAQCtjQz9kbGWD4nuZy3q6HaHGLA9z9__vBVRDVP7yPKtv4ph1WPgX7Us3dwae7Ey0ezV-AewQF5wO1mUU1Ii4df2bxPY6y6wkuLkxHfyTTwRN9eOP4HtOQ--Rhbo1hTz5zWJRBVIxPqRU6s7zHVe_Gv7nOGRqWbGTJMhuQCRwpxaOe90VUC-CKNbMvB6NuJ8fME3t6pzPLNL4dQ_c",
+          "urls": {
+            "destination": "https://delivery.adnuntius.com/c/zn4mKj5LB7UjGcCXPlHSM-51p2-ZDkCoG3Icrb5W_HwAAAAQCtjQz9kbGWD4nuZy3q6HaHGLA9z9__vBVRDVP7yPKtv4ph1WPgX7Us3dwae7Ey0ezV-AewQF5wO1mUU1Ii4df2bxPY6y6wkuLkxHfyTTwRN9eOP4HtOQ--Rhbo1hTz5zWJRBVIxPqRU6s7zHVe_Gv7nOGRqWbGTJMhuQCRwpxaOe90VUC-CKNbMvB6NuJ8fME3t6pzPLNL4dQ_c?ct=2501&r=https%3A%2F%2Fgithub.com%2FAdnuntius%2Fios_sdk"
+          },
+          "urlsEsc": {
+            "destination": "https%3A%2F%2Fdelivery.adnuntius.com%2Fc%2Fzn4mKj5LB7UjGcCXPlHSM-51p2-ZDkCoG3Icrb5W_HwAAAAQCtjQz9kbGWD4nuZy3q6HaHGLA9z9__vBVRDVP7yPKtv4ph1WPgX7Us3dwae7Ey0ezV-AewQF5wO1mUU1Ii4df2bxPY6y6wkuLkxHfyTTwRN9eOP4HtOQ--Rhbo1hTz5zWJRBVIxPqRU6s7zHVe_Gv7nOGRqWbGTJMhuQCRwpxaOe90VUC-CKNbMvB6NuJ8fME3t6pzPLNL4dQ_c%3Fct%3D2501%26r%3Dhttps%253A%252F%252Fgithub.com%252FAdnuntius%252Fios_sdk"
+          },
+          "destinationUrls": {
+            "destination": "https://github.com/Adnuntius/ios_sdk"
+          },
+          "cpm": {"amount": 1.0, "currency": "AUD"},
+          "bid": {"amount": 0.001, "currency": "AUD"},
+          "cost": {"amount": 0.001, "currency": "AUD"},
+          "impressionTrackingUrls": [  ],
+          "impressionTrackingUrlsEsc": [  ],
+          "adId": "adn-id-728395858",
+          "selectedColumn": "0",
+          "selectedColumnPosition": "0",
+          "renderedPixel": "https://delivery.adnuntius.com/b/zn4mKj5LB7UjGcCXPlHSM-51p2-ZDkCoG3Icrb5W_HwAAAAQCtjQz9kbGWD4nuZy3q6HaHGLA9z9__vBVRDVP7yPKtv4ph1WPgX7Us3dwae7Ey0ezV-AewQF5wO1mUU1Ii4df2bxPY6y6wkuLkxHfyTTwRN9eOP4HtOQ--Rhbo1hTz5zWJRBVIxPqRU6s7zHVe_Gv7nOGRqWbGTJMhuQCRwpxaOe90VUC-CKNbMvB6NuJ8fME3t6pzPLNL4dQ_c.html",
+          "renderedPixelEsc": "https%3A%2F%2Fdelivery.adnuntius.com%2Fb%2Fzn4mKj5LB7UjGcCXPlHSM-51p2-ZDkCoG3Icrb5W_HwAAAAQCtjQz9kbGWD4nuZy3q6HaHGLA9z9__vBVRDVP7yPKtv4ph1WPgX7Us3dwae7Ey0ezV-AewQF5wO1mUU1Ii4df2bxPY6y6wkuLkxHfyTTwRN9eOP4HtOQ--Rhbo1hTz5zWJRBVIxPqRU6s7zHVe_Gv7nOGRqWbGTJMhuQCRwpxaOe90VUC-CKNbMvB6NuJ8fME3t6pzPLNL4dQ_c.html",
+          "visibleUrl": "https://delivery.adnuntius.com/s?rt=zn4mKj5LB7UjGcCXPlHSM-51p2-ZDkCoG3Icrb5W_HwAAAAQCtjQz9kbGWD4nuZy3q6HaHGLA9z9__vBVRDVP7yPKtv4ph1WPgX7Us3dwae7Ey0ezV-AewQF5wO1mUU1Ii4df2bxPY6y6wkuLkxHfyTTwRN9eOP4HtOQ--Rhbo1hTz5zWJRBVIxPqRU6s7zHVe_Gv7nOGRqWbGTJMhuQCRwpxaOe90VUC-CKNbMvB6NuJ8fME3t6pzPLNL4dQ_c",
+          "visibleUrlEsc": "https%3A%2F%2Fdelivery.adnuntius.com%2Fs%3Frt%3Dzn4mKj5LB7UjGcCXPlHSM-51p2-ZDkCoG3Icrb5W_HwAAAAQCtjQz9kbGWD4nuZy3q6HaHGLA9z9__vBVRDVP7yPKtv4ph1WPgX7Us3dwae7Ey0ezV-AewQF5wO1mUU1Ii4df2bxPY6y6wkuLkxHfyTTwRN9eOP4HtOQ--Rhbo1hTz5zWJRBVIxPqRU6s7zHVe_Gv7nOGRqWbGTJMhuQCRwpxaOe90VUC-CKNbMvB6NuJ8fME3t6pzPLNL4dQ_c",
+          "viewUrl": "https://delivery.adnuntius.com/v?rt=zn4mKj5LB7UjGcCXPlHSM-51p2-ZDkCoG3Icrb5W_HwAAAAQCtjQz9kbGWD4nuZy3q6HaHGLA9z9__vBVRDVP7yPKtv4ph1WPgX7Us3dwae7Ey0ezV-AewQF5wO1mUU1Ii4df2bxPY6y6wkuLkxHfyTTwRN9eOP4HtOQ--Rhbo1hTz5zWJRBVIxPqRU6s7zHVe_Gv7nOGRqWbGTJMhuQCRwpxaOe90VUC-CKNbMvB6NuJ8fME3t6pzPLNL4dQ_c",
+          "viewUrlEsc": "https%3A%2F%2Fdelivery.adnuntius.com%2Fv%3Frt%3Dzn4mKj5LB7UjGcCXPlHSM-51p2-ZDkCoG3Icrb5W_HwAAAAQCtjQz9kbGWD4nuZy3q6HaHGLA9z9__vBVRDVP7yPKtv4ph1WPgX7Us3dwae7Ey0ezV-AewQF5wO1mUU1Ii4df2bxPY6y6wkuLkxHfyTTwRN9eOP4HtOQ--Rhbo1hTz5zWJRBVIxPqRU6s7zHVe_Gv7nOGRqWbGTJMhuQCRwpxaOe90VUC-CKNbMvB6NuJ8fME3t6pzPLNL4dQ_c",
+          "rt": "zn4mKj5LB7UjGcCXPlHSM-51p2-ZDkCoG3Icrb5W_HwAAAAQCtjQz9kbGWD4nuZy3q6HaHGLA9z9__vBVRDVP7yPKtv4ph1WPgX7Us3dwae7Ey0ezV-AewQF5wO1mUU1Ii4df2bxPY6y6wkuLkxHfyTTwRN9eOP4HtOQ--Rhbo1hTz5zWJRBVIxPqRU6s7zHVe_Gv7nOGRqWbGTJMhuQCRwpxaOe90VUC-CKNbMvB6NuJ8fME3t6pzPLNL4dQ_c",
+          "creativeWidth": "300",
+          "creativeHeight": "160",
+          "creativeId": "yxxxlpw6vqhk1jv8",
+          "lineItemId": "7pmy5r9rj62fyhjm",
+          "layoutId": "bitshift_internal_network_image_layout_1",
+          "layoutName": "Image",
+          "layoutExternalReference": "",
+          "renderTemplate": "<a rel=\"nofollow\" target=\"_top\" href=\"{{{urls.destination.url}}}\"><img src=\"{{{assets.Image.cdnId}}}\" width=\"{{assets.Image.width}}\" height=\"{{assets.Image.height}}\" alt=\"\"/></a>",
+          "html": "<a rel=\"nofollow\" target=\"_top\" href=\"https://delivery.adnuntius.com/c/zn4mKj5LB7UjGcCXPlHSM-51p2-ZDkCoG3Icrb5W_HwAAAAQCtjQz9kbGWD4nuZy3q6HaHGLA9z9__vBVRDVP7yPKtv4ph1WPgX7Us3dwae7Ey0ezV-AewQF5wO1mUU1Ii4df2bxPY6y6wkuLkxHfyTTwRN9eOP4HtOQ--Rhbo1hTz5zWJRBVIxPqRU6s7zHVe_Gv7nOGRqWbGTJMhuQCRwpxaOe90VUC-CKNbMvB6NuJ8fME3t6pzPLNL4dQ_c?ct=2501&r=https%3A%2F%2Fgithub.com%2FAdnuntius%2Fios_sdk\"><img src=\"https://assets.adnuntius.com/5M4OcUvJEArD4Tegb3Zc4XdOECv8zemyCi3yFmjgK-U.jpg\" width=\"300\" height=\"160\" alt=\"\"/></a>"
+        }
+      ]
     }
   ],
   "metaData": {
-
-    "usi": "48a60fc97ab086e01cda85cceef77d7a",
-
-    "sessionId": "20ee7ee8d2d06f76502bf503899f6266"
-
+    "usi": "1a7a57c779eeccbffa0d83030c0633da",
+    "sessionId": "e84af667ef95ee7e1d445ba784af82d9"
   },
-  "duplicateFilter": "AAAAAQAAAAAAAASKAAAAAA==",
+  "duplicateFilter": "AAAAAQAAAAAABvj8AAAAAA==",
   "segments": [],
   "keywords": []
-
 }

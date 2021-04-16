@@ -1,5 +1,6 @@
 package com.adnuntius.android.sdk;
 
+import com.adnuntius.android.sdk.ad.AdUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -10,7 +11,7 @@ import org.junit.Test;
 public class AdConfigTest extends Assert {
     @Test
     public void testToScript() {
-        AdConfig cfg = new AdConfig("0000000000023ae5")
+        AdRequest cfg = new AdRequest("0000000000023ae5")
                 .setHeight(300)
                 .setWidth(250)
                 .addKeyValue("car", "toyota")

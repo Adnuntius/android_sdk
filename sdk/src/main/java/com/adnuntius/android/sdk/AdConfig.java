@@ -1,80 +1,56 @@
 package com.adnuntius.android.sdk;
 
-import com.google.gson.annotations.SerializedName;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-public class AdConfig {
-    private final String auId;
-    private String auW;
-    private String auH;
-
-    @SerializedName("kv")
-    private Map<String, List<String>> kvs;
-
-    @SerializedName("c")
-    private List<String> categories;
-
-    public AdConfig(final String auId) {
-        this.auId = auId;
+/**
+ * @see AdRequest
+ */
+@Deprecated
+public class AdConfig extends AdRequest {
+    public AdConfig(String auId) {
+        super(auId);
     }
 
     public String getAuId() {
-        return auId;
+        return super.getAuId();
     }
 
+    @Deprecated
     public AdConfig setWidth(String auW) {
-        this.auW = auW;
+        super.setWidth(auW);
         return this;
     }
 
+    @Deprecated
     public AdConfig setHeight(String auH) {
-        this.auH = auH;
+        super.setHeight(auH);
         return this;
     }
 
-    /*
-    Convenience method for width
-     */
+    @Deprecated
     public AdConfig setWidth(int auW) {
         return(setWidth(auW + ""));
     }
 
-    /*
-    Convenience method for height
-     */
+    @Deprecated
     public AdConfig setHeight(int auH) {
-        return(setHeight(auH + ""));
+        super.setHeight(auH);
+        return this;
     }
 
+    @Deprecated
     public AdConfig addKeyValue(String key, String value) {
-        if (kvs == null) {
-            kvs = new HashMap<>();
-        }
-        List<String> values = kvs.get(key);
-        if (values == null) {
-            values = new ArrayList<>();
-            kvs.put(key, values);
-        }
-        values.add(value);
-
+        super.addKeyValue(key, value);
         return this;
     }
 
     @Deprecated
     public AdConfig addCategory(String category) {
-        return addCategories(category);
+        super.addCategories(category);
+        return this;
     }
 
+    @Deprecated
     public AdConfig addCategories(String ... categories) {
-        if (this.categories == null) {
-            this.categories = new ArrayList<>();
-        }
-        Collections.addAll(this.categories, categories);
+        super.addCategories(categories);
         return this;
     }
 }

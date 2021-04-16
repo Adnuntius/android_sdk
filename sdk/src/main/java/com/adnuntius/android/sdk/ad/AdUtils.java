@@ -1,5 +1,6 @@
-package com.adnuntius.android.sdk;
+package com.adnuntius.android.sdk.ad;
 
+import com.adnuntius.android.sdk.BuildConfig;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 

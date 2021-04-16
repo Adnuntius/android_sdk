@@ -16,18 +16,16 @@ public class AdnuntiusAdWebViewClient extends WebViewClient {
     private final Context context;
     private final CompletionHandler handler;
     private final AdnuntiusEnvironment env;
-    private final String deliveryUrl;
 
     public AdnuntiusAdWebViewClient(final Context context, final AdnuntiusEnvironment env, final CompletionHandler handler) {
         this.context = context;
         this.env = env;
-        this.deliveryUrl = HttpUtils.getDeliveryUrl(env);
         this.handler = handler;
     }
 
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest url) {
-        if (deliveryUrl.equals(url.getUrl().getHost())) {
+        if (HttpUtils.getDeliveryUrl(env).equals(url.getUrl().getHost())) {
             return false;
         }
 
