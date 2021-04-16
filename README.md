@@ -8,6 +8,11 @@ Adnuntius Android SDK for Android enables embedded Ads and Adnuntius Data integr
 repositories {
         google()
         mavenCentral()
+
+        // use a snapshot of the android-sdk
+        maven {
+            url "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
     }
 ```
 
