@@ -7,18 +7,16 @@ import com.adnuntius.android.sdk.http.HttpUtils;
 public class AdnuntiusJavascriptCallback {
     private final CompletionHandler handler;
     private final AdnuntiusEnvironment env;
-    private final String deliveryUrl;
 
     public AdnuntiusJavascriptCallback(final AdnuntiusEnvironment env, final CompletionHandler handler) {
         this.handler = handler;
         this.env = env;
-        this.deliveryUrl = HttpUtils.getDeliveryUrl(env);
     }
 
     @JavascriptInterface
     public void onComplete(String url, int adCount) {
         // only register an oncomplete for an impression, everything else is callbacks
-        if (url.contains(deliveryUrl + "/i")) {
+        if (url.contains(HttpUtils.getDeliveryUrl(env) + "/i")) {
             this.handler.onComplete(adCount);
         }
     }

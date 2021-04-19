@@ -1,5 +1,6 @@
 package com.adnuntius.android.sdk;
 
+import com.adnuntius.android.sdk.ad.AdUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;

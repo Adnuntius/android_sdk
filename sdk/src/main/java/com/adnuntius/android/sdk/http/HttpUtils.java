@@ -2,6 +2,7 @@ package com.adnuntius.android.sdk.http;
 
 import com.adnuntius.android.sdk.AdnuntiusEnvironment;
 import com.adnuntius.android.sdk.BuildConfig;
+import com.adnuntius.android.sdk.ad.DeliveryTarget;
 import com.adnuntius.android.sdk.data.DataTarget;
 
 public class HttpUtils {
@@ -13,11 +14,15 @@ public class HttpUtils {
         }
     }
 
+    public static String getDeliveryUrl(final AdnuntiusEnvironment env, final DeliveryTarget target) {
+        return getDeliveryUrl(env) + "/" + target.getTarget() + "?format=json&sdk=android:" + BuildConfig.VERSION_NAME;
+    }
+
     public static String getDeliveryUrl(final AdnuntiusEnvironment env) {
         if (env == AdnuntiusEnvironment.production) {
             return "https://delivery.adnuntius.com";
         } else {
-            return "https://delivery." + env.name() + ".adnuntius.com";
+            return "https://adserver." + env.name() + ".adnuntius.com";
         }
     }
 

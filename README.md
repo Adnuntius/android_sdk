@@ -40,11 +40,9 @@ Embed ads into your app using the AdnuntiusAdWebView.
 
 ### Load Ad
 
-In the Activity class load the web view in the onCreate (after calling setContentView), and then 
-load the ad in the onResume, this will ensure that ads are reloaded when the app is paused and resumed.
+In the Activity class load the web view in the onCreate (after calling setContentView), and then  load the ad in the onResume, this will ensure that ads are reloaded when the app is paused and resumed.
 
-The loadFromConfig accepts a CompletionHandler.  This completion handler callback
-will be called asynchronously when the ad is either loaded into the webview or not, or when an error occurs.
+The loadAd method accepts a CompletionHandler.  This completion handler callback will be called asynchronously when the ad is either loaded into the webview or not, or when an error occurs.
 
 A basic api for simple ad integrations, uses adn.js internally to render the ad and fire off all the right events.
 
@@ -52,12 +50,12 @@ A basic api for simple ad integrations, uses adn.js internally to render the ad 
     @Override
     protected void onResume() {
         super.onResume();
-        AdConfig config = new AdConfig("000000000006f450")
+        AdRequest request = new AdRequest("000000000006f450")
                 .setWidth(300)
                 .setHeight(200)
                 .addKeyValue("version", "4.3");
 
-        adView.loadFromConfig(config,
+        adView.loadAd(request,
             new CompletionHandler() {
                 @Override
                 public void onComplete(int adCount) {
@@ -76,16 +74,46 @@ A basic api for simple ad integrations, uses adn.js internally to render the ad 
 
 #### Limitations
 
-The AdConfig class supports specifying a single ad unit, key values and categories only.
+The AdRequest class supports specifying a single ad unit, key values and categories only.
 
 #### Gotchas
 
-Due to the nature of the Android webview implementation its possible to receive an onComplete() with an adCount > 0, but then
-receive an onFailure, in this case its most likely a configuration issue (your DIV id might be wrong for instance)
+Due to the nature of the Android webview implementation its possible to receive an onComplete() with an adCount > 0, but then receive an onFailure, in this case its most likely a configuration issue (your DIV id might be wrong for instance)
 
 ### Examples
 
 An example app is available here: https://github.com/Adnuntius/android_sdk_examples
+
+## Ad Client
+
+A very simple Ad Client for requesting ads via json from the adnuntius ad server.   The deprecated loadFromApi method on the AdnuntiusAdWebView uses this client.
+
+
+```java
+import com.adnuntius.android.sdk.ad.AdClient;
+```
+...
+
+```java
+final AdClient adClient = new AdClient(getApplicationContext());
+```
+
+### Request an Ad
+
+```java
+adClient.request("{\"adUnits\": [{\"auId\": \"000000000006f450\", \"kv\": [{\"version\":\"10\"}]}]}",
+    new AdResponseHandler() {
+        @Override
+        public void onSuccess(JsonObject response) {
+            // do something on success if necessary
+        }
+
+        @Override
+        public void onFailure(ErrorResponse response) {
+            // on failure, do something here
+        }
+    });
+```
 
 ## Adnuntius Data
 
@@ -126,11 +154,9 @@ dataClient.sync(sync, new DataResponseHandler() {
 
 #### Date and Timestamp API 25 gotchas
 
-If your application minSdkVersion is at least 26, you can use the setters which accept java.time.LocalDate or
-java.time.Instant.
+If your application minSdkVersion is at least 26, you can use the setters which accept java.time.LocalDate or java.time.Instant.
 
-If your application minSdkVersion is before 26, you can use the setters which accept com.adnuntius.android.sdk.data.profile.LocalDate or
-com.adnuntius.android.sdk.data.profile.Instant compatibility classes.
+If your application minSdkVersion is before 26, you can use the setters which accept com.adnuntius.android.sdk.data.profile.LocalDate or com.adnuntius.android.sdk.data.profile.Instant compatibility classes.
 
 ```java
 final Profile profile = new Profile();
@@ -157,9 +183,7 @@ dataClient.profile(profile, new DataResponseHandler() {
 
 ### Page View
 
-If you use the constructor which accepts a page url, the domainName and url path categories
-will be derived.   If you want to handle this yourself, use the setDomainName and addCategories
-methods directly.
+If you use the constructor which accepts a page url, the domainName and url path categories will be derived.   If you want to handle this yourself, use the setDomainName and addCategories methods directly.
 
 ```java
 final Page page = new Page("the page url");
@@ -182,8 +206,7 @@ dataClient.page(page, new DataResponseHandler() {
 
 ## Bugs, Issues and Support
 
-This SDK is a work in progress and will be given attention when necessary based on feed back.  You
-can raise issues on github or via zen desk at https://admin.adnuntius.com
+This SDK is a work in progress and will be given attention when necessary based on feed back.  You can raise issues on github or via zen desk at https://admin.adnuntius.com
 
 # License
 
