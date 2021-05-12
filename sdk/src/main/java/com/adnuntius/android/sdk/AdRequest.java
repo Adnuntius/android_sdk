@@ -9,12 +9,14 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * A simple ad request used for AdnuntiusAdWebView loadAd method
+ * Ad request used by AdnuntiusAdWebView loadAd method
  */
 public class AdRequest {
     private final String auId;
     private String auW;
     private String auH;
+
+    private transient boolean noCookies;
 
     @SerializedName("kv")
     private Map<String, List<String>> kvs;
@@ -38,6 +40,18 @@ public class AdRequest {
     public AdRequest setHeight(String auH) {
         this.auH = auH;
         return this;
+    }
+
+    public AdRequest noCookies() {
+        this.noCookies = true;
+        return this;
+    }
+
+    public boolean useCookies() {
+        // noCookies: true == useCookies false
+        // confusing I know, but noCookies is adn.js
+        // and useCookies is ad server parameter
+        return !this.noCookies;
     }
 
     /*
