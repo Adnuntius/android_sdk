@@ -47,7 +47,7 @@ public class AdRequest {
         return this;
     }
 
-    public boolean useCookies() {
+    boolean useCookies() {
         // noCookies: true == useCookies false
         // confusing I know, but noCookies is adn.js
         // and useCookies is ad server parameter

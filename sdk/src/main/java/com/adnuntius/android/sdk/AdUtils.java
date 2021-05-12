@@ -110,7 +110,7 @@ final class AdUtils {
                 "           window.adn = window.adn || {}; adn.calls = adn.calls || [];\n" +
                 "           adn.calls.push(function() {\n" +
                 "               adn.request({\n" +
-                "                   noCookies: " + !useCookies + ",\n" +
+                "                   useCookies: " + useCookies + ",\n" +
                 "                   adUnits: [" + adUnitsJson + "]\n" +
                 "               });\n" +
                 "           });\n" +
