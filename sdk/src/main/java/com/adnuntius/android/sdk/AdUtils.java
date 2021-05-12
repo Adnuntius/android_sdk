@@ -1,8 +1,5 @@
 package com.adnuntius.android.sdk;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-
 final class AdUtils {
     public static class AdResponse {
         private final String html;
@@ -73,31 +70,6 @@ final class AdUtils {
     private AdUtils() {
     }
 
-    @Deprecated
-    static String injectShim(final String script) {
-        final String tmpScript = script
-                .replaceAll("<head\\s*/>", "<head></head>");
-
-        int indexOf = tmpScript.indexOf("<head");
-        if (indexOf != -1) {
-
-            final int endIndexOf = tmpScript.indexOf(">", indexOf);
-            final String startScript = tmpScript.substring(0, endIndexOf + 1);
-            final String endScript = tmpScript.substring(endIndexOf + 2);
-            return startScript + "\n<script type=\"text/javascript\">\n" + JS_SHIM + "\n</script>\n" + endScript;
-        } else {
-            indexOf = tmpScript.indexOf("<html");
-            if (indexOf != -1) {
-                int endIndexOf = tmpScript.indexOf(">", indexOf);
-                final String startScript = tmpScript.substring(0, endIndexOf + 1);
-                final String endScript = tmpScript.substring(endIndexOf + 2);
-                return startScript + "\n<head>\n<script type=\"text/javascript\">\n" + JS_SHIM + "\n</script>\n</head>\n" + endScript;
-            } else {
-                throw new IllegalArgumentException("Invalid script");
-            }
-        }
-    }
-
     static String getAdScript(final String auId, final String adUnitsJson, final boolean useCookies) {
         return "<html>\n" +
                 "<head>\n" +
@@ -117,17 +89,5 @@ final class AdUtils {
                 "       </script>" +
                 "   </body>\n" +
                 "</html>";
-    }
-
-    static AdResponse getAdFromDeliveryResponse(JsonObject response) {
-        final JsonArray jArr = response.getAsJsonArray("adUnits");
-        if (jArr.size() > 0) {
-            final JsonObject ad = jArr.get(0).getAsJsonObject();
-            final int adCount = ad.getAsJsonPrimitive("matchedAdCount").getAsInt();
-            if (adCount > 0) {
-                return new AdResponse(ad.getAsJsonPrimitive("html").getAsString(), adCount);
-            }
-        }
-        return null;
     }
 }

@@ -94,4 +94,20 @@ public class AdRequest {
         Collections.addAll(this.categories, categories);
         return this;
     }
+
+    List<String> getCategories() {
+        return categories;
+    }
+
+    Map<String, List<String>> getKeyValues() {
+        return kvs;
+    }
+
+    String getHeight() {
+        return auH;
+    }
+
+    String getWidth() {
+        return auW;
+    }
 }

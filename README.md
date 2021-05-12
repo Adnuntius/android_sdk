@@ -85,37 +85,6 @@ Due to the nature of the Android webview implementation its possible to receive 
 
 An example app is available here: https://github.com/Adnuntius/android_sdk_examples
 
-## Ad Client
-
-A very simple Ad Client for requesting ads via json from the adnuntius ad server.   The deprecated loadFromApi method on the AdnuntiusAdWebView uses this client.
-
-
-```java
-import com.adnuntius.android.sdk.ad.AdClient;
-```
-...
-
-```java
-final AdClient adClient = new AdClient(getApplicationContext());
-```
-
-### Request an Ad
-
-```java
-adClient.request("{\"adUnits\": [{\"auId\": \"000000000006f450\", \"kv\": [{\"version\":\"10\"}]}]}",
-    new AdResponseHandler() {
-        @Override
-        public void onSuccess(JsonObject response) {
-            // do something on success if necessary
-        }
-
-        @Override
-        public void onFailure(ErrorResponse response) {
-            // on failure, do something here
-        }
-    });
-```
-
 ## Adnuntius Data
 
 A new DataClient is available to generate sync, profile update (aka visitor) and page events to adnuntius data.
