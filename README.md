@@ -40,7 +40,7 @@ Embed ads into your app using the AdnuntiusAdWebView.
 
 ### Load Ad
 
-In the Activity class load the web view in the onCreate (after calling setContentView), and then  load the ad in the onResume, this will ensure that ads are reloaded when the app is paused and resumed.
+In the Activity class load the web view in the onCreate (after calling setContentView), and then load the ad in the onResume, this will ensure that ads are reloaded when the app is paused and resumed.
 
 The loadAd method accepts a CompletionHandler.  This completion handler callback will be called asynchronously when the ad is either loaded into the webview or not, or when an error occurs.
 
@@ -53,6 +53,7 @@ A basic api for simple ad integrations, uses adn.js internally to render the ad 
         AdRequest request = new AdRequest("000000000006f450")
                 .setWidth(300)
                 .setHeight(200)
+                .noCookies()
                 .addKeyValue("version", "4.3");
 
         adView.loadAd(request,
@@ -78,7 +79,7 @@ The AdRequest class supports specifying a single ad unit, key values and categor
 
 #### Gotchas
 
-Due to the nature of the Android webview implementation its possible to receive an onComplete() with an adCount > 0, but then receive an onFailure, in this case its most likely a configuration issue (your DIV id might be wrong for instance)
+Due to the nature of the Android webview implementation its possible to receive an onComplete() with an adCount > 0, but then receive an onFailure.
 
 ### Examples
 
