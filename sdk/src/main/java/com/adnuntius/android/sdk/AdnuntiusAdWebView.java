@@ -1,14 +1,13 @@
 package com.adnuntius.android.sdk;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.webkit.WebView;
 
 import com.adnuntius.android.sdk.ad.AdClient;
 import com.adnuntius.android.sdk.ad.AdResponseHandler;
-import com.adnuntius.android.sdk.ad.AdUtils;
 import com.adnuntius.android.sdk.http.ErrorResponse;
 import com.adnuntius.android.sdk.http.HttpUtils;
 import com.adnuntius.android.sdk.http.volley.VolleyHttpClient;
@@ -29,6 +28,7 @@ public class AdnuntiusAdWebView extends WebView {
         this(context, attrs, new AdClient(AdnuntiusEnvironment.production, new VolleyHttpClient(context)));
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     public AdnuntiusAdWebView(final Context context,
                               final AttributeSet attrs,
                               final AdClient adClient) {
@@ -50,13 +50,13 @@ public class AdnuntiusAdWebView extends WebView {
 
         // https://stackoverflow.com/a/23844693
         boolean isDebuggable = ( 0 != ( context.getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE ) );
-        if (isDebuggable && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        if (isDebuggable) {
             WebView.setWebContentsDebuggingEnabled(true);
         }
     }
 
     /**
-     * @see loadAd
+     * @see #loadAd
      *
      * @param config
      * @param handler
@@ -69,10 +69,9 @@ public class AdnuntiusAdWebView extends WebView {
     public void loadAd(final AdRequest request, final CompletionHandler handler) {
         this.wrapper.setDelegate(handler);
 
-        final String jsJsonConfigString = gson.toJson(request).replace('"', '\'');
-        final String adScript = AdUtils.getAdScript(request.getAuId(), jsJsonConfigString);
-        final String shimmedAdScript = AdUtils.injectShim(adScript);
-         loadDataWithBaseURL(HttpUtils.getDeliveryUrl(adClient.getEnv()), shimmedAdScript, "text/html", "UTF-8", null);
+        final String adUnitsJson = gson.toJson(request).replace('"', '\'');
+        final String adScript = AdUtils.getAdScript(request.getAuId(), adUnitsJson, request.useCookies());
+         loadDataWithBaseURL(HttpUtils.getDeliveryUrl(adClient.getEnv()), adScript, "text/html", "UTF-8", null);
     }
 
     /**

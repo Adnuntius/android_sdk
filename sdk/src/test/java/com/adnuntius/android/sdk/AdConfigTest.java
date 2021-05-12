@@ -1,6 +1,5 @@
 package com.adnuntius.android.sdk;
 
-import com.adnuntius.android.sdk.ad.AdUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -17,6 +16,7 @@ public class AdConfigTest extends Assert {
                 .addKeyValue("car", "toyota")
                 .addKeyValue("car", "ford")
                 .addKeyValue("sport", "football")
+                .noCookies()
                 .addCategories("sports", "casinos");
 
         Gson gson = new Gson();
@@ -33,7 +33,9 @@ public class AdConfigTest extends Assert {
         assertEquals("sports", jsonArray.get(0).getAsString());
         assertEquals("casinos", jsonArray.get(1).getAsString());
 
-        final String adScript = AdUtils.getAdScript(cfg.getAuId(), script);
+        final String adScript = AdUtils.getAdScript(cfg.getAuId(), script, cfg.useCookies());
+        assertTrue(adScript.contains("noCookies: true,"));
+        assertFalse(adScript.contains("'noCookies':true"));
         assertTrue(adScript.contains("'auId':'0000000000023ae5'"));
         assertTrue(adScript.contains("id=\"adn-0000000000023ae5\""));
         assertTrue(adScript.contains("'kv':{'car':['toyota','ford']"));

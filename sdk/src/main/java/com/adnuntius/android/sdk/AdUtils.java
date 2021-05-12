@@ -1,10 +1,9 @@
-package com.adnuntius.android.sdk.ad;
+package com.adnuntius.android.sdk;
 
-import com.adnuntius.android.sdk.BuildConfig;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-public final class AdUtils {
+final class AdUtils {
     public static class AdResponse {
         private final String html;
         private final int adCount;
@@ -74,7 +73,8 @@ public final class AdUtils {
     private AdUtils() {
     }
 
-    public static String injectShim(final String script) {
+    @Deprecated
+    static String injectShim(final String script) {
         final String tmpScript = script
                 .replaceAll("<head\\s*/>", "<head></head>");
 
@@ -98,9 +98,10 @@ public final class AdUtils {
         }
     }
 
-    public static String getAdScript(final String auId, final String jsJsonConfigString) {
+    static String getAdScript(final String auId, final String adUnitsJson, final boolean useCookies) {
         return "<html>\n" +
                 "<head>\n" +
+                "   <script type=\"text/javascript\">\n" + JS_SHIM + "\n</script>\n" +
                 "   <script type=\"text/javascript\" src=\"https://cdn.adnuntius.com/adn.js\" async></script>\n" +
                 "</head>\n" +
                 "   <body>\n" +
@@ -108,14 +109,17 @@ public final class AdUtils {
                 "       <script type=\"text/javascript\">\n" +
                 "           window.adn = window.adn || {}; adn.calls = adn.calls || [];\n" +
                 "           adn.calls.push(function() {\n" +
-                "               adn.request({ adUnits: [" + jsJsonConfigString + "]});\n" +
+                "               adn.request({\n" +
+                "                   noCookies: " + !useCookies + ",\n" +
+                "                   adUnits: [" + adUnitsJson + "]\n" +
+                "               });\n" +
                 "           });\n" +
                 "       </script>" +
                 "   </body>\n" +
                 "</html>";
     }
 
-    public static AdResponse getAdFromDeliveryResponse(JsonObject response) {
+    static AdResponse getAdFromDeliveryResponse(JsonObject response) {
         final JsonArray jArr = response.getAsJsonArray("adUnits");
         if (jArr.size() > 0) {
             final JsonObject ad = jArr.get(0).getAsJsonObject();
