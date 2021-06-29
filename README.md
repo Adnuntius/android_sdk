@@ -19,7 +19,7 @@ repositories {
 Add a dependency to your build.gradle file:
 
 ```
-implementation 'com.adnuntius.android.sdk:1.4.0-SNAPSHOT'
+implementation 'com.adnuntius.android.sdk:1.4.0'
 ```
 
 ## Ad Delivery
