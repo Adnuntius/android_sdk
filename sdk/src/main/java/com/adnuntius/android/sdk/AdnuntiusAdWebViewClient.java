@@ -25,7 +25,7 @@ public class AdnuntiusAdWebViewClient extends WebViewClient {
 
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest url) {
-        if (HttpUtils.getDeliveryUrl(env).equals(url.getUrl().getHost())) {
+        if (HttpUtils.getDeliveryUrl(env, null).equals(url.getUrl().getHost())) {
             return false;
         }
 

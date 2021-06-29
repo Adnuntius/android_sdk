@@ -16,7 +16,7 @@ public class AdnuntiusJavascriptCallback {
     @JavascriptInterface
     public void onComplete(String url, int adCount) {
         // only register an oncomplete for an impression, everything else is callbacks
-        if (url.contains(HttpUtils.getDeliveryUrl(env) + "/i")) {
+        if (url.contains(HttpUtils.getDeliveryUrl(env, null) + "/i")) {
             this.handler.onComplete(adCount);
         }
     }

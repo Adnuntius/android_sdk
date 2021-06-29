@@ -1,5 +1,7 @@
 package com.adnuntius.android.sdk;
 
+import androidx.annotation.Nullable;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -17,6 +19,7 @@ public class AdRequest {
     private String auH;
 
     private transient boolean noCookies;
+    private transient LivePreview livePreview;
 
     @SerializedName("kv")
     private Map<String, List<String>> kvs;
@@ -45,6 +48,15 @@ public class AdRequest {
     public AdRequest noCookies() {
         this.noCookies = true;
         return this;
+    }
+
+    public AdRequest livePreview(final String lpl, @Nullable final String lpc) {
+        livePreview = new LivePreview(lpl, lpc);
+        return this;
+    }
+
+    LivePreview livePreview() {
+        return livePreview;
     }
 
     boolean useCookies() {

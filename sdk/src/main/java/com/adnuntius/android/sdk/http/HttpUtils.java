@@ -1,7 +1,10 @@
 package com.adnuntius.android.sdk.http;
 
+import androidx.annotation.Nullable;
+
 import com.adnuntius.android.sdk.AdnuntiusEnvironment;
 import com.adnuntius.android.sdk.BuildConfig;
+import com.adnuntius.android.sdk.LivePreview;
 import com.adnuntius.android.sdk.data.DataTarget;
 
 public class HttpUtils {
@@ -13,11 +16,18 @@ public class HttpUtils {
         }
     }
 
-    public static String getDeliveryUrl(final AdnuntiusEnvironment env) {
+    public static String getDeliveryUrl(final AdnuntiusEnvironment env, @Nullable LivePreview livePreview) {
+        final String baseUrl;
         if (env == AdnuntiusEnvironment.production) {
-            return "https://delivery.adnuntius.com";
+            baseUrl = "https://delivery.adnuntius.com";
         } else {
-            return "https://adserver." + env.name() + ".adnuntius.com";
+            baseUrl = "https://adserver." + env.name() + ".adnuntius.com";
+        }
+
+        if (livePreview != null) {
+            return baseUrl + "?adn-lp-li=" + livePreview.getLpl() + (livePreview.getLpc() == null ? "" : "&adn-lp-c=" + livePreview.getLpc());
+        } else {
+            return baseUrl;
         }
     }
 

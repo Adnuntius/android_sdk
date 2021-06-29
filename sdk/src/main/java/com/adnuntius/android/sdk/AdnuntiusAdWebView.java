@@ -65,14 +65,12 @@ public class AdnuntiusAdWebView extends WebView {
 
         final String adUnitsJson = gson.toJson(request).replace('"', '\'');
         final String adScript = AdUtils.getAdScript(request.getAuId(), adUnitsJson, request.useCookies());
-         loadDataWithBaseURL(HttpUtils.getDeliveryUrl(env), adScript, "text/html", "UTF-8", null);
+         loadDataWithBaseURL(HttpUtils.getDeliveryUrl(env, request.livePreview()), adScript, "text/html", "UTF-8", null);
     }
 
     /**
      * This method of loading ads into the web view is deprecated, because it does not have all the
      * smarts of loadAd(AdRequest request) which utilises adn.js
-     *
-     * @see AdClient
      *
      * @param requestJson
      * @param handler

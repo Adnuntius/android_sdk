@@ -73,6 +73,20 @@ A basic api for simple ad integrations, uses adn.js internally to render the ad 
     }
 ```
 
+#### Live Preview support
+
+This is probably mostly useful for development, but if you want to force a line item / creative combo to appear in your web view.
+
+```java
+let config = [
+    AdRequest request = new AdRequest("000000000006f450")
+                .setWidth(300)
+                .setHeight(200)
+                .livePreview("line item id", "creative id")
+                .noCookies()
+                .addKeyValue("version", "4.3");
+```
+
 #### Limitations
 
 The AdRequest class supports specifying a single ad unit, key values and categories only.
