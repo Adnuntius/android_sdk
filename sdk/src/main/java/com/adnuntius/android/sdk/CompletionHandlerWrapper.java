@@ -23,4 +23,9 @@ public class CompletionHandlerWrapper implements CompletionHandler {
             delegate.onFailure(error);
         }
     }
+
+    @Override
+    public void onClose() {
+        delegate.onClose();
+    }
 }
