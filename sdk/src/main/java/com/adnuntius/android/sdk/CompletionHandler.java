@@ -1,6 +1,10 @@
 package com.adnuntius.android.sdk;
 
 public interface CompletionHandler {
-    public void onComplete(int adCount);
-    public void onFailure(String message);
+    void onComplete(int adCount);
+    void onFailure(String message);
+
+    default void onClose() {
+        // do nothing
+    }
 }

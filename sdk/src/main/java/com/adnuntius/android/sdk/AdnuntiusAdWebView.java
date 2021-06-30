@@ -40,7 +40,8 @@ public class AdnuntiusAdWebView extends WebView {
         AdnuntiusAdWebViewChromeClient chromeClient = new AdnuntiusAdWebViewChromeClient(wrapper);
         this.setWebChromeClient(chromeClient);
 
-        this.addJavascriptInterface(new AdnuntiusJavascriptCallback(env, wrapper), "adnuntius");
+        this.addJavascriptInterface(new InternalAdnuntiusJavascriptCallback(env, wrapper), "intAndroidAdnuntius");
+        this.addJavascriptInterface(new AdnuntiusJavascriptCallback(wrapper), "androidAdnuntius");
 
         // https://stackoverflow.com/a/23844693
         boolean isDebuggable = ( 0 != ( context.getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE ) );

@@ -27,9 +27,9 @@ final class AdUtils {
         "adnSdkShim.ajaxEvent = function(url, status, response) {\n" +
         "   if (status == 200) {\n" +
         "       var adCount = this.getAdsCount(response)\n" +
-    "           adnuntius.onComplete(url, adCount);\n" +
+    "           intAndroidAdnuntius.onComplete(url, adCount);\n" +
         "   } else {\n" +
-        "       adnuntius.onFailure(url, status);\n" +
+        "       intAndroidAdnuntius.onFailure(url, status);\n" +
         "   }\n" +
         "}\n" +
         "\n" +
