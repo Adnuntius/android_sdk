@@ -43,6 +43,9 @@ public class AdnuntiusAdWebView extends WebView {
         this.addJavascriptInterface(new InternalAdnuntiusJavascriptCallback(env, wrapper), "intAndroidAdnuntius");
         this.addJavascriptInterface(new AdnuntiusJavascriptCallback(wrapper), "androidAdnuntius");
 
+        // make the name compatible with the iOS sdk
+        this.addJavascriptInterface(new AdnuntiusJavascriptCallback(wrapper), "adnSdkHandler");
+
         // https://stackoverflow.com/a/23844693
         boolean isDebuggable = ( 0 != ( context.getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE ) );
         if (isDebuggable) {
