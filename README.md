@@ -19,7 +19,7 @@ repositories {
 Add a dependency to your build.gradle file:
 
 ```
-implementation 'com.adnuntius.android.sdk:1.4.1'
+implementation 'com.adnuntius.android.sdk:1.4.2'
 ```
 
 ## Ad Delivery
@@ -80,8 +80,8 @@ Its now possible to close a web view from an adnuntius layout via javascript.
 If you want to be able to close ad view from javascript, its not possible to close the parent window from a layout due to the dreaded `Scripts may close only the windows that were opened by them.`   So we have added a new method you can call from javascript which provides this functionality:
 
 ```javascript
-if (typeof parent.androidAdnuntius != "undefined") {
- parent.androidAdnuntius.closeView();
+if (typeof parent.adnSdkHandler != "undefined") {
+ parent.adnSdkHandler.closeView();
 }
 ```
 
