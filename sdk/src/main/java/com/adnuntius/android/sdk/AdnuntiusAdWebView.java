@@ -69,7 +69,17 @@ public class AdnuntiusAdWebView extends WebView {
 
         final String adUnitsJson = gson.toJson(request).replace('"', '\'');
         final String adScript = AdUtils.getAdScript(request.getAuId(), adUnitsJson, request.useCookies());
-         loadDataWithBaseURL(HttpUtils.getDeliveryUrl(env, request.livePreview()), adScript, "text/html", "UTF-8", null);
+         loadDataWithBaseURL(HttpUtils.getDeliveryUrl(env, request.livePreview()), adScript,"text/html", "UTF-8", null);
+    }
+
+    /**
+     * This is for dev purposes mostly, so you can properly debug the webview by initially loading
+     * a blank page so that you can attach the chrome debug tools to the web view before calling loadAd
+     *
+     * @see https://github.com/Adnuntius/android_sdk/wiki/Debug-Web-View
+     */
+    public void loadBlankPage() {
+        loadDataWithBaseURL(HttpUtils.getDeliveryUrl(env, null), "<html><title>Blank Page</title><body><h1>This page left intentionally blank</h1></body></html>","text/html", "UTF-8", null);
     }
 
     /**
