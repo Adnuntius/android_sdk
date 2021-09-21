@@ -110,7 +110,7 @@ let config = [
 
 #### userId and sessionId support
 
-Possible to inject a application wide userId or sessionId into an ad request.   These values are passed onto the ad server request.0
+Possible to inject a application wide userId or sessionId into an ad request.   These values are passed onto the ad server request.
 
 - https://docs.adnuntius.com/adnuntius-advertising/requesting-ads/intro/adn-request#userid
 - https://docs.adnuntius.com/adnuntius-advertising/requesting-ads/intro/adn-request#sessionid
