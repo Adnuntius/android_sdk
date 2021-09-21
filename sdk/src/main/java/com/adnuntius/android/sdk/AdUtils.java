@@ -70,19 +70,21 @@ final class AdUtils {
     private AdUtils() {
     }
 
-    static String getAdScript(final String auId, final String adUnitsJson, final boolean useCookies) {
+    static String getAdScript(final AdRequest request, final String adUnitsJson) {
         return "<html>\n" +
                 "<head>\n" +
                 "   <script type=\"text/javascript\">\n" + JS_SHIM + "\n</script>\n" +
                 "   <script type=\"text/javascript\" src=\"https://cdn.adnuntius.com/adn.js\" async></script>\n" +
                 "</head>\n" +
                 "   <body>\n" +
-                "       <div id=\"adn-" + auId + "\" style=\"display:none\"></div>\n" +
+                "       <div id=\"adn-" + request.auId() + "\" style=\"display:none\"></div>\n" +
                 "       <script type=\"text/javascript\">\n" +
                 "           window.adn = window.adn || {}; adn.calls = adn.calls || [];\n" +
                 "           adn.calls.push(function() {\n" +
                 "               adn.request({\n" +
-                "                   useCookies: " + useCookies + ",\n" +
+                (request.useCookies() ? "" : "useCookies: false,\n")+
+                (request.userId() == null ? "" : "userId: \"" + request.userId() + "\",\n")+
+                (request.sessionId() == null ? "" : "sessionId: \"" + request.sessionId() + "\",\n")+
                 "                   adUnits: [" + adUnitsJson + "]\n" +
                 "               });\n" +
                 "           });\n" +

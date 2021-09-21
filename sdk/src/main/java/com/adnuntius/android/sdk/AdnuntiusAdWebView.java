@@ -68,7 +68,7 @@ public class AdnuntiusAdWebView extends WebView {
         this.wrapper.setDelegate(handler);
 
         final String adUnitsJson = gson.toJson(request).replace('"', '\'');
-        final String adScript = AdUtils.getAdScript(request.getAuId(), adUnitsJson, request.useCookies());
+        final String adScript = AdUtils.getAdScript(request, adUnitsJson);
          loadDataWithBaseURL(HttpUtils.getDeliveryUrl(env, request.livePreview()), adScript,"text/html", "UTF-8", null);
     }
 

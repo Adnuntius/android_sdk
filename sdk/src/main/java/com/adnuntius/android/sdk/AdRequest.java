@@ -17,8 +17,9 @@ public class AdRequest {
     private final String auId;
     private String auW;
     private String auH;
-
-    private transient boolean noCookies;
+    private transient String userId;
+    private transient String sessionId;
+    private transient boolean useCookies;
     private transient LivePreview livePreview;
 
     @SerializedName("kv")
@@ -31,7 +32,7 @@ public class AdRequest {
         this.auId = auId;
     }
 
-    public String getAuId() {
+    public String auId() {
         return auId;
     }
 
@@ -45,49 +46,69 @@ public class AdRequest {
         return this;
     }
 
+    @Deprecated
     public AdRequest noCookies() {
-        this.noCookies = true;
+        return useCookies(false);
+    }
+
+    public AdRequest useCookies(final boolean useCookies) {
+        this.useCookies = useCookies;
+        return this;
+    }
+
+    public AdRequest userId(final String userId) {
+        this.userId = userId;
+        return this;
+    }
+
+    public AdRequest sessionId(final String sessionId) {
+        this.sessionId = sessionId;
         return this;
     }
 
     public AdRequest livePreview(final String lpl, @Nullable final String lpc) {
-        livePreview = new LivePreview(lpl, lpc);
+        this.livePreview = new LivePreview(lpl, lpc);
         return this;
     }
 
     LivePreview livePreview() {
-        return livePreview;
+        return this.livePreview;
+    }
+
+    String userId() {
+        return this.userId;
+    }
+
+    String sessionId() {
+        return this.sessionId;
     }
 
     boolean useCookies() {
-        // noCookies: true == useCookies false
-        // confusing I know, but noCookies is adn.js
-        // and useCookies is ad server parameter
-        return !this.noCookies;
+        return this.useCookies;
     }
 
     /*
     Convenience method for width
      */
-    public AdRequest setWidth(int auW) {
+    public AdRequest setWidth(final int auW) {
         return(setWidth(auW + ""));
     }
 
     /*
     Convenience method for height
      */
-    public AdRequest setHeight(int auH) {
+    public AdRequest setHeight(final int auH) {
         return(setHeight(auH + ""));
     }
 
-    public AdRequest addKeyValue(String key, String value) {
-        if (kvs == null) {
-            kvs = new HashMap<>();
+    public AdRequest addKeyValue(final String key, final String value) {
+        if (this.kvs == null) {
+            this.kvs = new HashMap<>();
         }
-        List<String> values = kvs.get(key);
+        List<String> values = this.kvs.get(key);
         if (values == null) {
             values = new ArrayList<>();
-            kvs.put(key, values);
+            this.kvs.put(key, values);
         }
         values.add(value);
 
@@ -95,11 +116,11 @@ public class AdRequest {
     }
 
     @Deprecated
-    public AdRequest addCategory(String category) {
+    public AdRequest addCategory(final String category) {
         return addCategories(category);
     }
 
-    public AdRequest addCategories(String ... categories) {
+    public AdRequest addCategories(final String ... categories) {
         if (this.categories == null) {
             this.categories = new ArrayList<>();
         }
@@ -108,18 +129,18 @@ public class AdRequest {
     }
 
     List<String> getCategories() {
-        return categories;
+        return this.categories;
     }
 
     Map<String, List<String>> getKeyValues() {
-        return kvs;
+        return this.kvs;
     }
 
     String getHeight() {
-        return auH;
+        return this.auH;
     }
 
     String getWidth() {
-        return auW;
+        return this.auW;
     }
 }

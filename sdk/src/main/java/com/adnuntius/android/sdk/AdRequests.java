@@ -6,6 +6,7 @@ import java.util.List;
 /**
  * Only used for deprecated loadFromApi
  */
+@Deprecated
 class AdRequests {
     private List<AdRequest> adUnits = new ArrayList<>();
 

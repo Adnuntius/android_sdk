@@ -19,7 +19,7 @@ repositories {
 Add a dependency to your build.gradle file:
 
 ```
-implementation 'com.adnuntius.android.sdk:1.4.2'
+implementation 'com.adnuntius.android.sdk:1.4.4'
 ```
 
 ## Ad Delivery
@@ -97,6 +97,23 @@ And the corresponding method in the CompletionHandler:
 #### Live Preview support
 
 This is probably mostly useful for development, but if you want to force a line item / creative combo to appear in your web view.
+
+```java
+let config = [
+    AdRequest request = new AdRequest("000000000006f450")
+                .setWidth(300)
+                .setHeight(200)
+                .livePreview("line item id", "creative id")
+                .noCookies()
+                .addKeyValue("version", "4.3");
+```
+
+#### userId and sessionId support
+
+Possible to inject a application wide userId or sessionId into an ad request.   These values are passed onto the ad server request.0
+
+- https://docs.adnuntius.com/adnuntius-advertising/requesting-ads/intro/adn-request#userid
+- https://docs.adnuntius.com/adnuntius-advertising/requesting-ads/intro/adn-request#sessionid
 
 ```java
 let config = [

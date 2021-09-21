@@ -9,10 +9,6 @@ public class AdConfig extends AdRequest {
         super(auId);
     }
 
-    public String getAuId() {
-        return super.getAuId();
-    }
-
     @Deprecated
     public AdConfig setWidth(String auW) {
         super.setWidth(auW);
