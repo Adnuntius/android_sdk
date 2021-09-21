@@ -1,16 +1,21 @@
 package com.adnuntius.android.sdk;
 
+import static android.util.Log.DEBUG;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.util.AttributeSet;
 import android.webkit.WebView;
+import android.util.Log;
 
 import com.adnuntius.android.sdk.http.HttpUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 public class AdnuntiusAdWebView extends WebView {
+    private static final String TAG = "AdnuntiusAdWebView";
+
     private final Gson gson;
     private final AdnuntiusEnvironment env;
     private final CompletionHandlerWrapper wrapper = new CompletionHandlerWrapper();
@@ -69,7 +74,10 @@ public class AdnuntiusAdWebView extends WebView {
 
         final String adUnitsJson = gson.toJson(request).replace('"', '\'');
         final String adScript = AdUtils.getAdScript(request, adUnitsJson);
-         loadDataWithBaseURL(HttpUtils.getDeliveryUrl(env, request.livePreview()), adScript,"text/html", "UTF-8", null);
+        if (Log.isLoggable(TAG, DEBUG)) {
+            Log.d(TAG, "Ad Script " + adScript);
+        }
+        loadDataWithBaseURL(HttpUtils.getDeliveryUrl(env, request.livePreview()), adScript,"text/html", "UTF-8", null);
     }
 
     /**
