@@ -17,9 +17,8 @@ public class AdRequest {
     private final String auId;
     private String auW;
     private String auH;
-    private transient String userId;
-    private transient String sessionId;
     private transient boolean useCookies;
+    private transient Map<String, String> globalParameters;
     private transient LivePreview livePreview;
 
     @SerializedName("kv")
@@ -57,12 +56,27 @@ public class AdRequest {
     }
 
     public AdRequest userId(final String userId) {
-        this.userId = userId;
+        globalParameter(GlobalProperty.userId, userId);
         return this;
     }
 
     public AdRequest sessionId(final String sessionId) {
-        this.sessionId = sessionId;
+        return globalParameter(GlobalProperty.sessionId, sessionId);
+    }
+
+    public AdRequest consentString(final String sessionId) {
+        return globalParameter(GlobalProperty.consentString, sessionId);
+    }
+
+    public AdRequest globalParameter(final GlobalProperty key, final String value) {
+        return globalParameter(key.name(), value);
+    }
+
+    public AdRequest globalParameter(final String key, final String value) {
+        if (globalParameters == null) {
+            globalParameters = new HashMap<>();
+        }
+        globalParameters.put(key, value);
         return this;
     }
 
@@ -75,12 +89,14 @@ public class AdRequest {
         return this.livePreview;
     }
 
-    String userId() {
-        return this.userId;
-    }
-
-    String sessionId() {
-        return this.sessionId;
+    /**
+     * yes this is the actual map, not a copy of a immutable wrapper
+     */
+    Map<String, String> globalProperties() {
+        if (globalParameters == null) {
+            return Collections.emptyMap();
+        }
+        return globalParameters;
     }
 
     boolean useCookies() {

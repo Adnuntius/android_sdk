@@ -1,5 +1,7 @@
 package com.adnuntius.android.sdk;
 
+import java.util.stream.Collectors;
+
 final class AdUtils {
     public static class AdResponse {
         private final String html;
@@ -71,6 +73,9 @@ final class AdUtils {
     }
 
     static String getAdScript(final AdRequest request, final String adUnitsJson) {
+        final String globalProperties = request.globalProperties().entrySet().stream().map(e -> "                   " + e.getKey() + ": \"" + e.getValue() + "\"")
+                .collect(Collectors.joining(",\n"));
+
         return "<html>\n" +
                 "<head>\n" +
                 "   <script type=\"text/javascript\">\n" + JS_SHIM + "\n</script>\n" +
@@ -82,9 +87,8 @@ final class AdUtils {
                 "           window.adn = window.adn || {}; adn.calls = adn.calls || [];\n" +
                 "           adn.calls.push(function() {\n" +
                 "               adn.request({\n" +
-                (request.useCookies() ? "" : "useCookies: false,\n")+
-                (request.userId() == null ? "" : "userId: \"" + request.userId() + "\",\n")+
-                (request.sessionId() == null ? "" : "sessionId: \"" + request.sessionId() + "\",\n")+
+                (request.useCookies() ? "" : "                   useCookies: false,\n")+
+                (globalProperties.isEmpty() ? "" : globalProperties + ",\n") +
                 "                   adUnits: [" + adUnitsJson + "]\n" +
                 "               });\n" +
                 "           });\n" +

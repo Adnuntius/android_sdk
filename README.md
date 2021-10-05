@@ -108,12 +108,15 @@ let config = [
                 .addKeyValue("version", "4.3");
 ```
 
-#### userId and sessionId support
+#### userId, sessionId and consentString support
 
-Possible to inject a application wide userId or sessionId into an ad request.   These values are passed onto the ad server request.
+Possible to inject a application wide userId, sessionId and consentString into an ad request.
+
+These values are passed onto the ad server request.
 
 - https://docs.adnuntius.com/adnuntius-advertising/requesting-ads/intro/adn-request#userid
 - https://docs.adnuntius.com/adnuntius-advertising/requesting-ads/intro/adn-request#sessionid
+- https://docs.adnuntius.com/adnuntius-advertising/requesting-ads/intro/adn-request#consentstring
 
 ```java
 let config = [

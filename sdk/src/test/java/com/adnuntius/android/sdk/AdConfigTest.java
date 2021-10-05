@@ -33,7 +33,6 @@ public class AdConfigTest extends Assert {
                 .useCookies(false)
                 .addCategories("sports", "casinos");
 
-
         final String script = gson.toJson(cfg).replace('"', '\'');
 
         assertTrue(script.contains("'auId':'0000000000023ae5'"));
@@ -50,6 +49,7 @@ public class AdConfigTest extends Assert {
         final String adScript = AdUtils.getAdScript(cfg, script);
         assertTrue(adScript.contains("useCookies: false,"));
         assertFalse(adScript.contains("userId: "));
+        assertFalse(adScript.contains("consentString: "));
         assertFalse(adScript.contains("sessionId: "));
         assertFalse(adScript.contains("'useCookies':false"));
         assertTrue(adScript.contains("'auId':'0000000000023ae5'"));
@@ -60,12 +60,16 @@ public class AdConfigTest extends Assert {
 
         cfg.useCookies(true)
                 .userId("my user id")
-                .sessionId("my session id");
+                .sessionId("my session id")
+                .consentString("my consent string")
+                .globalParameter("gdpr", "1");
 
         final String adScript2 = AdUtils.getAdScript(cfg, script);
         assertFalse(adScript2.contains("useCookies: false,"));
         assertTrue(adScript2.contains("userId: \"my user id\","));
-        assertTrue(adScript2.contains("sessionId: \"my session id\","));
+        assertTrue(adScript2.contains("userId: \"my user id\","));
+        assertTrue(adScript2.contains("gdpr: \"1\","));
+        assertTrue(adScript2.contains("consentString: \"my consent string\","));
         assertFalse(adScript2.contains("'useCookies':false"));
         assertTrue(adScript2.contains("'auId':'0000000000023ae5'"));
         assertTrue(adScript2.contains("id=\"adn-0000000000023ae5\""));
