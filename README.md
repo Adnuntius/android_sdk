@@ -108,9 +108,9 @@ let config = [
                 .addKeyValue("version", "4.3");
 ```
 
-#### userId, sessionId and consentString support
+#### Parent parameter configuration
 
-Possible to inject a application wide userId, sessionId and consentString into an ad request.
+Possible to configure parent request parameters such as userId, sessionId and consentString into an ad request.
 
 These values are passed onto the ad server request.
 
@@ -118,12 +118,18 @@ These values are passed onto the ad server request.
 - https://docs.adnuntius.com/adnuntius-advertising/requesting-ads/intro/adn-request#sessionid
 - https://docs.adnuntius.com/adnuntius-advertising/requesting-ads/intro/adn-request#consentstring
 
+You can also specify other parent request parameters, such as gdpr:
+
 ```java
 let config = [
     AdRequest request = new AdRequest("000000000006f450")
                 .setWidth(300)
                 .setHeight(200)
                 .livePreview("line item id", "creative id")
+                .userId("some user id")
+                .sessionId("some user id")
+                .consentString("some consent string")
+                .parentParameter("gdpr", "0")
                 .noCookies()
                 .addKeyValue("version", "4.3");
 ```

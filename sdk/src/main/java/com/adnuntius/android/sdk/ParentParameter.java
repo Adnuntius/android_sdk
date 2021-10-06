@@ -1,6 +1,6 @@
 package com.adnuntius.android.sdk;
 
-public enum GlobalProperty {
+public enum ParentParameter {
     sessionId,
     userId,
     consentString

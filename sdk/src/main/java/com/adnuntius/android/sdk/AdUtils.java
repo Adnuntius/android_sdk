@@ -73,7 +73,7 @@ final class AdUtils {
     }
 
     static String getAdScript(final AdRequest request, final String adUnitsJson) {
-        final String globalProperties = request.globalProperties().entrySet().stream().map(e -> "                   " + e.getKey() + ": \"" + e.getValue() + "\"")
+        final String globalProperties = request.parentParameters().entrySet().stream().map(e -> "                   " + e.getKey() + ": \"" + e.getValue() + "\"")
                 .collect(Collectors.joining(",\n"));
 
         return "<html>\n" +

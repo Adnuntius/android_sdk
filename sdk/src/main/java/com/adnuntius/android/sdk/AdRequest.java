@@ -18,7 +18,7 @@ public class AdRequest {
     private String auW;
     private String auH;
     private transient boolean useCookies;
-    private transient Map<String, String> globalParameters;
+    private transient Map<String, String> parentParameters;
     private transient LivePreview livePreview;
 
     @SerializedName("kv")
@@ -56,27 +56,37 @@ public class AdRequest {
     }
 
     public AdRequest userId(final String userId) {
-        globalParameter(GlobalProperty.userId, userId);
+        parentParameter(ParentParameter.userId, userId);
         return this;
     }
 
     public AdRequest sessionId(final String sessionId) {
-        return globalParameter(GlobalProperty.sessionId, sessionId);
+        return parentParameter(ParentParameter.sessionId, sessionId);
     }
 
     public AdRequest consentString(final String sessionId) {
-        return globalParameter(GlobalProperty.consentString, sessionId);
+        return parentParameter(ParentParameter.consentString, sessionId);
     }
 
-    public AdRequest globalParameter(final GlobalProperty key, final String value) {
-        return globalParameter(key.name(), value);
+    @Deprecated
+    public AdRequest globalParameter(final ParentParameter key, final String value) {
+        return parentParameter(key.name(), value);
     }
 
+    @Deprecated
     public AdRequest globalParameter(final String key, final String value) {
-        if (globalParameters == null) {
-            globalParameters = new HashMap<>();
+        return parentParameter(key, value);
+    }
+
+    public AdRequest parentParameter(final ParentParameter key, final String value) {
+        return parentParameter(key.name(), value);
+    }
+
+    public AdRequest parentParameter(final String key, final String value) {
+        if (parentParameters == null) {
+            parentParameters = new HashMap<>();
         }
-        globalParameters.put(key, value);
+        parentParameters.put(key, value);
         return this;
     }
 
@@ -92,11 +102,11 @@ public class AdRequest {
     /**
      * yes this is the actual map, not a copy of a immutable wrapper
      */
-    Map<String, String> globalProperties() {
-        if (globalParameters == null) {
+    Map<String, String> parentParameters() {
+        if (parentParameters == null) {
             return Collections.emptyMap();
         }
-        return globalParameters;
+        return parentParameters;
     }
 
     boolean useCookies() {
