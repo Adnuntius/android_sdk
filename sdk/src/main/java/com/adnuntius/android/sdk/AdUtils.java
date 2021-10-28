@@ -1,6 +1,6 @@
 package com.adnuntius.android.sdk;
 
-import java.util.stream.Collectors;
+import java.util.Map;
 
 final class AdUtils {
     public static class AdResponse {
@@ -73,8 +73,13 @@ final class AdUtils {
     }
 
     static String getAdScript(final AdRequest request, final String adUnitsJson) {
-        final String globalProperties = request.parentParameters().entrySet().stream().map(e -> "                   " + e.getKey() + ": \"" + e.getValue() + "\"")
-                .collect(Collectors.joining(",\n"));
+        final StringBuilder builder = new StringBuilder();
+        for (Map.Entry<String, String> e : request.parentParameters().entrySet()) {
+            if (builder.length() > 0) {
+                builder.append(",\n");
+            }
+            builder.append("                   " + e.getKey() + ": \"" + e.getValue() + "\"");
+        }
 
         return "<html>\n" +
                 "<head>\n" +
@@ -88,7 +93,7 @@ final class AdUtils {
                 "           adn.calls.push(function() {\n" +
                 "               adn.request({\n" +
                 (request.useCookies() ? "" : "                   useCookies: false,\n")+
-                (globalProperties.isEmpty() ? "" : globalProperties + ",\n") +
+                (builder.length() == 0 ? "" : builder.toString() + ",\n") +
                 "                   adUnits: [" + adUnitsJson + "]\n" +
                 "               });\n" +
                 "           });\n" +
