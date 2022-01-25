@@ -1,6 +1,6 @@
 # Adnuntius SDK
 
-Adnuntius Android SDK for Android enables embedded Ads and Adnuntius Data integration.
+Adnuntius Android SDK for Android enables embedding Ads and Adnuntius Data into your Android applications.
 
 ## The Wiki
 
