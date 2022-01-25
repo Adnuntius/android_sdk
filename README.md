@@ -4,11 +4,11 @@ Adnuntius Android SDK for Android enables embedded Ads and Adnuntius Data integr
 
 ## The Wiki
 
-All the information about integrating and using the SDK is on the [Wiki](https://github.com/Adnuntius/ios_sdk/wiki)
+All the information about integrating and using the SDK is on the [Wiki](https://github.com/Adnuntius/android_sdk/wiki)
 
 ## Examples
 
-Some examples of using the SDK are available from https://github.com/Adnuntius/ios_sdk_examples
+Some examples of using the SDK are available [here](https://github.com/Adnuntius/android_sdk_examples)
 
 ## Bugs, Issues and Support
 
