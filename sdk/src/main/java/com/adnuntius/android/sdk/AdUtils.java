@@ -83,6 +83,7 @@ final class AdUtils {
 
         return "<html>\n" +
                 "<head>\n" +
+                "   <style type=\"text/css\"> html, body { margin: 0px; padding: 0px; } </style>\n" +
                 "   <script type=\"text/javascript\">\n" + JS_SHIM + "\n</script>\n" +
                 "   <script type=\"text/javascript\" src=\"https://cdn.adnuntius.com/adn.js\" async></script>\n" +
                 "</head>\n" +
