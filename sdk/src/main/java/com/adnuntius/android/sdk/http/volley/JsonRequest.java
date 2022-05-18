@@ -15,11 +15,13 @@ import java.util.Map;
 
 public class JsonRequest extends com.android.volley.toolbox.JsonRequest<String> {
     private final BearerToken token;
+    private final String userAgent;
 
     public JsonRequest(
             final int method,
             final String url,
             final String jsonString,
+            final String userAgent,
             @Nullable final BearerToken token,
             final VolleyResponseHandler handler) {
         super(method,
@@ -28,21 +30,24 @@ public class JsonRequest extends com.android.volley.toolbox.JsonRequest<String> 
                 handler,
                 handler);
         setShouldCache(false);
+        this.userAgent = userAgent;
         this.token = token;
     }
 
     @Override
-    public Map<String, String> getHeaders() throws AuthFailureError {
+    public Map<String, String> getHeaders() {
+        Map<String, String> headerMap = new HashMap<>();
+        if (userAgent != null) {
+            headerMap.put("User-agent", userAgent);
+        }
+
         if (token != null) {
-            Map<String, String> headerMap = new HashMap<>();
             if (getMethod() != Request.Method.GET) {
                 headerMap.put("Content-Type", "application/json");
             }
             headerMap.put("Authorization", "Bearer " + token.getAccessToken());
-            return headerMap;
-        } else {
-            return super.getHeaders();
         }
+        return headerMap;
     }
 
     @Override

@@ -3,24 +3,6 @@ package com.adnuntius.android.sdk;
 import java.util.Map;
 
 final class AdUtils {
-    public static class AdResponse {
-        private final String html;
-        private final int adCount;
-
-        public AdResponse(final String html, final int adCount) {
-            this.html = html;
-            this.adCount = adCount;
-        }
-
-        public String getHtml() {
-            return html;
-        }
-
-        public int getAdCount() {
-            return adCount;
-        }
-    }
-
     private static final String JS_SHIM =
         "var adnSdkShim = new Object();\n" +
         "adnSdkShim.reallyOpen = XMLHttpRequest.prototype.open;\n" +
@@ -94,7 +76,7 @@ final class AdUtils {
                 "           adn.calls.push(function() {\n" +
                 "               adn.request({\n" +
                 (request.useCookies() ? "" : "                   useCookies: false,\n")+
-                (builder.length() == 0 ? "" : builder.toString() + ",\n") +
+                (builder.length() == 0 ? "" : builder + ",\n") +
                 "                   adUnits: [" + adUnitsJson + "]\n" +
                 "               });\n" +
                 "           });\n" +

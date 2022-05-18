@@ -17,6 +17,7 @@ import java.io.UnsupportedEncodingException;
 
 public class VolleyHttpClient implements HttpClient {
     private final HttpRequestQueue requestQueue;
+    private String userAgent;
 
     public VolleyHttpClient(final Context context) {
         this(RequestQueueSingleton.getInstance(context));
@@ -24,6 +25,10 @@ public class VolleyHttpClient implements HttpClient {
 
     public VolleyHttpClient(final HttpRequestQueue requestQueue) {
         this.requestQueue = requestQueue;
+    }
+
+    public void setUserAgent(final String userAgent) {
+        this.userAgent = userAgent;
     }
 
     @Override
@@ -67,6 +72,7 @@ public class VolleyHttpClient implements HttpClient {
                 method,
                 url,
                 jsonString,
+                userAgent,
                 token,
                 new VolleyResponseHandler() {
                     @Override

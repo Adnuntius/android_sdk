@@ -6,7 +6,6 @@ import com.adnuntius.android.sdk.AdnuntiusEnvironment;
 import com.adnuntius.android.sdk.data.DataClient;
 import com.adnuntius.android.sdk.data.profile.Profile;
 import com.adnuntius.android.sdk.data.profile.ProfileFields;
-import com.adnuntius.android.sdk.http.AuthClient;
 import com.adnuntius.android.sdk.http.HttpClient;
 
 import org.junit.Before;
@@ -25,17 +24,14 @@ public class DataClientAndroidVolleyTest {
     private static final String devFolderId = "000000000000009d";
     private static final String devBrowserId = "23123123132123123213213";
 
-    private MockHttpResponseHandler handler = new MockHttpResponseHandler();
+    private final MockHttpResponseHandler handler = new MockHttpResponseHandler();
 
-    private HttpClient httpClient;
     private DataClient dataClient;
-    private AuthClient authClient;
 
     @Before
     public void setUp() {
-        httpClient = new VolleyHttpClient((Context) getApplicationContext());
+        final HttpClient httpClient = new VolleyHttpClient((Context) getApplicationContext());
         dataClient = new DataClient(AdnuntiusEnvironment.dev, httpClient);
-        authClient = new AuthClient(AdnuntiusEnvironment.dev, httpClient);
         handler.clear();
     }
 
