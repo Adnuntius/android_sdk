@@ -12,6 +12,7 @@ import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.StringRequest;
 
 import java.io.UnsupportedEncodingException;
 
@@ -31,6 +32,10 @@ public class VolleyHttpClient implements HttpClient {
         this.userAgent = userAgent;
     }
 
+    @Override
+    public void getRequest(final String url, final HttpResponseHandler handler) {
+        httpRequest(Request.Method.GET, url, handler);
+    }
     @Override
     public void getJsonRequest(final String url, final HttpResponseHandler handler) {
         jsonRequest(Request.Method.GET, url, null, null, handler);
@@ -63,54 +68,31 @@ public class VolleyHttpClient implements HttpClient {
         jsonRequest(Request.Method.POST, url, jsonString, token, handler);
     }
 
+    private void httpRequest(final int method, final String url, final HttpResponseHandler handler) {
+        final VolleyResponseHandler volleyHandler = new DefaultVolleyResponseHandler(handler, false);
+        final StringRequest request = new StringRequest(
+                method,
+                url,
+                volleyHandler,
+                volleyHandler);
+        request.setShouldCache(false);
+        requestQueue.add(request);
+    }
+
     private void jsonRequest(
-            final int method, final String url,
-                                @Nullable final String jsonString,
-                                @Nullable final BearerToken token,
-                                final HttpResponseHandler handler)  {
+            final int method,
+            final String url,
+            @Nullable final String jsonString,
+            @Nullable final BearerToken token,
+            final HttpResponseHandler handler)  {
         final JsonRequest request = new JsonRequest(
                 method,
                 url,
                 jsonString,
                 userAgent,
                 token,
-                new VolleyResponseHandler() {
-                    @Override
-                    public void onResponse(String jsonResponse) {
-                        // always a valid json response is returned
-                        if (jsonResponse == null || jsonResponse.isEmpty() || jsonResponse.trim().isEmpty()) {
-                            handler.onSuccess("{}");
-                        } else {
-                            handler.onSuccess(jsonResponse);
-                        }
-                    }
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        if (error.networkResponse != null) {
-                            final String responseData = VolleyHttpClient.toString(error.networkResponse);
-
-                            handler.onFailure(new ErrorResponse(error.networkResponse.statusCode,
-                                    responseData + ": " + error.getMessage()));
-                        } else if (error.getCause() instanceof NullPointerException) {
-                            // this only occurs when using robolectric as a normal test, when executing on an
-                            // emulator there is no issue at all, it correctly returns the 404 error
-                            handler.onFailure(new ErrorResponse(404, ""));
-                        } else { // a bad thing has happened, and volley should have logged it already
-                            handler.onFailure(new ErrorResponse(-1, error.getMessage()));
-                        }
-                    }
-                });
+                new DefaultVolleyResponseHandler(handler, true));
+        request.setShouldCache(false);
         requestQueue.add(request);
     }
-
-    private static String toString(final NetworkResponse response) {
-        try {
-            return new String(response.data,
-                    HttpHeaderParser.parseCharset(response.headers, "utf-8"));
-        } catch (UnsupportedEncodingException e) {
-            return null;
-        }
-    }
-
 }

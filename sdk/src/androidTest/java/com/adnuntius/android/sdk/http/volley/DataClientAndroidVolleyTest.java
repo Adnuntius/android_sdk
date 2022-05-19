@@ -24,7 +24,7 @@ public class DataClientAndroidVolleyTest {
     private static final String devFolderId = "000000000000009d";
     private static final String devBrowserId = "23123123132123123213213";
 
-    private final MockHttpResponseHandler handler = new MockHttpResponseHandler();
+    private final MockResponseHandler handler = new MockResponseHandler();
 
     private DataClient dataClient;
 
@@ -48,6 +48,6 @@ public class DataClientAndroidVolleyTest {
         dataClient.profile(profile, handler);
 
         handler.waitForMessages(1);
-        assertEquals(1, handler.responses.get());
+        assertEquals(1, handler.responses.size());
     }
 }

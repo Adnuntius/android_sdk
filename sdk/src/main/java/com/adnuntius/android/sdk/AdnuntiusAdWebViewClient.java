@@ -2,6 +2,7 @@ package com.adnuntius.android.sdk;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
@@ -11,7 +12,7 @@ import android.webkit.WebViewClient;
 import com.adnuntius.android.sdk.http.HttpUtils;
 
 public class AdnuntiusAdWebViewClient extends WebViewClient {
-    private static final String TAG = "AdnuntiusSDKWebView";
+    private static final String TAG = "AdnuntiusWebViewClient";
 
     private final Context context;
     private final CompletionHandler handler;
@@ -36,19 +37,19 @@ public class AdnuntiusAdWebViewClient extends WebViewClient {
 
     @Override
     public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
-        // just a bit of overkill to avoid npe
-        if(request.getUrl() != null
-                && request.getUrl().getPath() != null
-                && request.getUrl().getPath().endsWith("/favicon.ico")) {
-            try {
-                return new WebResourceResponse("image/png", null, null);
-            } catch (Exception e) {
+        final Uri url = request.getUrl() == null ? null : request.getUrl();
+        if (url != null) {
+            Log.i(TAG, url.toString());
+
+            final String path = url.getPath() == null ? null : url.getPath();
+            // just a bit of overkill to avoid npe
+            if (path != null && path.endsWith("/favicon.ico")) {
+                try {
+                    return new WebResourceResponse("image/png", null, null);
+                } catch (Exception e) {
+                }
             }
         }
-        return null;
-    }
-
-    public void onLoadResource(WebView view, String url) {
-        Log.d(TAG, url);
+        return super.shouldInterceptRequest(view, request);
     }
 }
