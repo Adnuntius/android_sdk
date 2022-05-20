@@ -1,5 +1,8 @@
 package com.adnuntius.android.sdk;
 
+import static com.adnuntius.android.sdk.AdnuntiusEnvironment.andemu;
+import static com.adnuntius.android.sdk.AdnuntiusEnvironment.production;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -46,10 +49,11 @@ public class AdConfigTest extends Assert {
         assertEquals("sports", jsonArray.get(0).getAsString());
         assertEquals("casinos", jsonArray.get(1).getAsString());
 
-        final String adScript = AdUtils.getAdScript(cfg, script);
+        final String adScript = AdUtils.getAdScript(production, cfg, script);
         assertTrue(adScript.contains("useCookies: false,"));
         assertFalse(adScript.contains("userId: "));
         assertFalse(adScript.contains("consentString: "));
+        assertTrue(adScript.contains("src=\"" + AdUtils.getAdnJsUrl(production) + "\""));
         assertFalse(adScript.contains("sessionId: "));
         assertFalse(adScript.contains("'useCookies':false"));
         assertTrue(adScript.contains("'auId':'0000000000023ae5'"));
@@ -64,12 +68,13 @@ public class AdConfigTest extends Assert {
                 .consentString("my consent string")
                 .globalParameter("gdpr", "1");
 
-        final String adScript2 = AdUtils.getAdScript(cfg, script);
+        final String adScript2 = AdUtils.getAdScript(andemu, cfg, script);
         assertFalse(adScript2.contains("useCookies: false,"));
         assertTrue(adScript2.contains("userId: \"my user id\","));
         assertTrue(adScript2.contains("userId: \"my user id\","));
         assertTrue(adScript2.contains("gdpr: \"1\","));
         assertTrue(adScript2.contains("consentString: \"my consent string\","));
+        assertTrue(adScript2.contains("src=\"" + AdUtils.getAdnJsUrl(andemu) + "\""));
         assertFalse(adScript2.contains("'useCookies':false"));
         assertTrue(adScript2.contains("'auId':'0000000000023ae5'"));
         assertTrue(adScript2.contains("id=\"adn-0000000000023ae5\""));

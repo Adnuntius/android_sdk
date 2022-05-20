@@ -3,7 +3,6 @@ package com.adnuntius.android.sdk.http.volley;
 import androidx.annotation.Nullable;
 
 import com.adnuntius.android.sdk.http.BearerToken;
-import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
 import com.android.volley.Request;

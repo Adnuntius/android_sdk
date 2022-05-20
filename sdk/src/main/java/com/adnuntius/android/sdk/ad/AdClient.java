@@ -47,8 +47,11 @@ public class AdClient {
         final AdRequests adRequests = new AdRequests(request);
         final String adUnitsJson = gson.toJson(adRequests);
 
-        final String impressionUrl = HttpUtils.getDeliveryUrl(env, null)
-                + "/i" + "?format=json&sdk=android:" + BuildConfig.VERSION_NAME;
+        final String deliveryUrl = HttpUtils.getDeliveryUrl(env, "/i", null);
+        final String separator = deliveryUrl.contains("/i?") ? "&" : "?";
+        final String impressionUrl = deliveryUrl + separator
+                + "format=json&sdk=android:" + BuildConfig.VERSION_NAME;
+
         httpClient.postJsonRequest(
                 impressionUrl,
                 adUnitsJson,

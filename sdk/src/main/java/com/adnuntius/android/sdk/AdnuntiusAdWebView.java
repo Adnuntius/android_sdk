@@ -17,7 +17,7 @@ public class AdnuntiusAdWebView extends WebView {
     private static final String TAG = "AdnuntiusAdWebView";
 
     private final Gson gson;
-    private final AdnuntiusEnvironment env;
+    private AdnuntiusEnvironment env;
     private final CompletionHandlerWrapper wrapper = new CompletionHandlerWrapper();
 
     public AdnuntiusAdWebView(final Context context) {
@@ -59,6 +59,14 @@ public class AdnuntiusAdWebView extends WebView {
     }
 
     /**
+     * Provide facility to override the environment configuration
+     * @param env
+     */
+    public void setEnvironment(AdnuntiusEnvironment env) {
+        this.env = env;
+    }
+
+    /**
      * @see #loadAd
      *
      * @param config
@@ -73,11 +81,13 @@ public class AdnuntiusAdWebView extends WebView {
         this.wrapper.setDelegate(handler);
 
         final String adUnitsJson = gson.toJson(request).replace('"', '\'');
-        final String adScript = AdUtils.getAdScript(request, adUnitsJson);
+        final String adScript = AdUtils.getAdScript(env, request, adUnitsJson);
         if (Log.isLoggable(TAG, DEBUG)) {
-            Log.d(TAG, "Ad Script " + adScript);
+            Log.d(TAG, "Ad Script: " + adScript);
         }
-        loadDataWithBaseURL(HttpUtils.getDeliveryUrl(env, request.livePreview()), adScript,"text/html", "UTF-8", null);
+        final String baseUrl = HttpUtils.getDeliveryUrl(env, request.livePreview());
+        Log.d(TAG, "Base URL: " + baseUrl);
+        loadDataWithBaseURL(baseUrl, adScript,"text/html", "UTF-8", null);
     }
 
     /**
