@@ -19,7 +19,7 @@ public class InternalAdnuntiusJavascriptCallback {
     }
 
     @JavascriptInterface
-    public void onFailure(String url, int httpStatus) {
-        this.handler.onFailure(httpStatus + " error returned for " + url);
+    public void onFailure(int httpStatus, String statusMessage) {
+        this.handler.onFailure(statusMessage + " (" + httpStatus + ") error returned");
     }
 }

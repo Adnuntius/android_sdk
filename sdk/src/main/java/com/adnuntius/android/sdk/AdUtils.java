@@ -9,7 +9,7 @@ final class AdUtils {
     private static final String JS_SHIM =
         "var adnSdkShim = new Object();\n" +
         "adnSdkShim.onVisible = function(args) {\n" +
-        "   //console.log(\"onVisible:\" + JSON.stringify(args))\n"+
+        "   //console.log(\"onVisible:\" + JSON.stringify(args))\n" +
         "}\n" +
         "adnSdkShim.onRestyle = function(args) {\n" +
         "   //console.log(\"onRestyle:\" + JSON.stringify(args))\n" +
@@ -18,10 +18,19 @@ final class AdUtils {
         "   //console.log(\"onViewable:\" + JSON.stringify(args))\n" +
         "}\n" +
         "adnSdkShim.onPageLoad = function(args) {\n" +
-         "  intAndroidAdnuntius.onComplete(args.retAdCount);\n" +
+        "  intAndroidAdnuntius.onComplete(args.retAdCount);\n" +
         "}\n" +
         "adnSdkShim.onNoMatchedAds = function(args) {\n" +
         "  intAndroidAdnuntius.onComplete(0);\n" +
+        "}\n" +
+        "adnSdkShim.onError = function(args) {\n" +
+        // this is a XMLHttpRequest object with a failed response from adn.js
+        "   if (args.hasOwnProperty('args') && args['args'][0]) {\n" +
+        "       var object = args['args'][0]\n" +
+        "       if ('response' in object && 'status' in object) {\n" +
+        "           intAndroidAdnuntius.onFailure(object['status'], object['response'])\n" +
+        "       }\n" +
+        "   }\n" +
         "}\n" +
         "adnSdkShim.onImpressionResponse = function(args) {\n" +
         "   //console.log(\"onImpressionResponse:\" + JSON.stringify(args))\n" +
@@ -59,6 +68,7 @@ final class AdUtils {
                 "                   onVisible: adnSdkShim.onVisible,\n" +
                 "                   onViewable: adnSdkShim.onViewable,\n" +
                 "                   onRestyle: adnSdkShim.onRestyle,\n" +
+                "                   onError: adnSdkShim.onError,\n" +
                 (request.useCookies() ? "" : "                   useCookies: false,\n")+
                 (builder.length() == 0 ? "" : builder + ",\n") +
                 "                   adUnits: [" + adUnitsJson + "]\n" +

@@ -2,17 +2,15 @@ apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
 apply plugin: 'signing'
 
-version = "1.5.0-SNAPSHOT"
+version = "1.5.0"
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 32
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        // https://www.appbrain.com/stats/top-android-sdk-versions
-        // anything below lollipop hardly seems worth it
-        minSdkVersion 21
-        targetSdkVersion 30
+        minSdkVersion 23
+        targetSdkVersion 32
         versionName version
         versionCode Integer.valueOf(version.toString().replace('.', '').replace('-SNAPSHOT', ''))
 
