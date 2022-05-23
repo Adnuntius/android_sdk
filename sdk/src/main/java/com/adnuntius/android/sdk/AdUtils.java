@@ -1,7 +1,6 @@
 package com.adnuntius.android.sdk;
 
 import static com.adnuntius.android.sdk.AdnuntiusEnvironment.andemu;
-import static com.adnuntius.android.sdk.AdnuntiusEnvironment.production;
 
 import java.util.Map;
 
@@ -60,7 +59,7 @@ final class AdUtils {
                 "           window.adn = window.adn || {}; adn.calls = adn.calls || [];\n" +
                 "           adn.calls.push(function() {\n" +
                 "               adn.request({\n" +
-                (env == production ? "" : "                   env: '" + env.name() + "',\n") +
+                "                   env: '" + env.name() + "',\n" +
                 "                   sdk: 'android:" + BuildConfig.VERSION_NAME + "',\n" +
                 "                   onPageLoad: adnSdkShim.onPageLoad,\n" +
                 "                   onImpressionResponse: adnSdkShim.onImpressionResponse,\n" +
@@ -82,8 +81,9 @@ final class AdUtils {
     static String getAdnJsUrl(final AdnuntiusEnvironment env) {
         if (env == andemu) {
             return "http://10.0.2.2:8001/adn.src.js";
+        } else {
+            // currently all other envs use prod cdn
+            return "https://cdn.adnuntius.com/adn.js";
         }
-        // currently all other envs use prod cdn
-        return "https://cdn.adnuntius.com/adn.js";
     }
 }
