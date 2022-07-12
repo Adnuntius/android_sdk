@@ -35,15 +35,12 @@ public class HttpUtils {
         }
 
         if (livePreview != null) {
-<<<<<<< Updated upstream
             final String separator = env == andemu ? "&" : "?";
             return baseUrl
                     + separator
                     + "adn-lp-li=" + livePreview.getLpl() + (livePreview.getLpc() == null ? "" : "&adn-lp-c="
-                    + livePreview.getLpc());
-=======
-            baseUrl.append("?adn-lp-li=" + livePreview.getLpl() + (livePreview.getLpc() == null ? "" : "&adn-lp-c=" + livePreview.getLpc()) + "&adn-hide-warning=true");
->>>>>>> Stashed changes
+                    + livePreview.getLpc())
+                    + "&adn-hide-warning=true";
         }
         return baseUrl;
     }
