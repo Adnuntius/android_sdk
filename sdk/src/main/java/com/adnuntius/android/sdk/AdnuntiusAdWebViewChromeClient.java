@@ -4,9 +4,9 @@ import android.webkit.ConsoleMessage;
 import android.webkit.WebChromeClient;
 
 public class AdnuntiusAdWebViewChromeClient extends WebChromeClient {
-    private final CompletionHandler handler;
+    private final LoadAdHandler handler;
 
-    public AdnuntiusAdWebViewChromeClient(final CompletionHandler handler) {
+    public AdnuntiusAdWebViewChromeClient(final LoadAdHandler handler) {
         this.handler = handler;
     }
 

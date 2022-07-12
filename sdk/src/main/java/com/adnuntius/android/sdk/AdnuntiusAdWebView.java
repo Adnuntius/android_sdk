@@ -18,7 +18,7 @@ public class AdnuntiusAdWebView extends WebView {
 
     private final Gson gson;
     private AdnuntiusEnvironment env;
-    private final CompletionHandlerWrapper wrapper = new CompletionHandlerWrapper();
+    private final LoadAdHandlerWrapper wrapper = new LoadAdHandlerWrapper();
 
     public AdnuntiusAdWebView(final Context context) {
         this(context,null);
@@ -67,7 +67,7 @@ public class AdnuntiusAdWebView extends WebView {
     }
 
     /**
-     * @see #loadAd
+     * @see #loadAd(AdRequest, LoadAdHandler)
      *
      * @param config
      * @param handler
@@ -77,7 +77,22 @@ public class AdnuntiusAdWebView extends WebView {
         loadAd(config, handler);
     }
 
+    /**
+     * @see #loadAd(AdRequest, LoadAdHandler)
+     *
+     * @param request
+     * @param handler
+     */
+    @Deprecated
     public void loadAd(final AdRequest request, final CompletionHandler handler) {
+        loadAd(request, new LoadAdCompletionHandlerAdaptor(handler));
+    }
+
+    /*
+        @param request
+        @param handler
+     */
+    public void loadAd(final AdRequest request, final LoadAdHandler handler) {
         this.wrapper.setDelegate(handler);
 
         final String adUnitsJson = gson.toJson(request).replace('"', '\'');
@@ -109,7 +124,7 @@ public class AdnuntiusAdWebView extends WebView {
      */
     @Deprecated
     public void loadFromApi(final String requestJson, final CompletionHandler handler) {
-        this.wrapper.setDelegate(handler);
+        this.wrapper.setDelegate(new LoadAdCompletionHandlerAdaptor(handler));
 
         final AdRequests requests = gson.fromJson(requestJson, AdRequests.class);
         if (requests.getAdUnits().size() != 1) {

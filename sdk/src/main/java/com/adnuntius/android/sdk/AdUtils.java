@@ -7,33 +7,53 @@ import java.util.Map;
 final class AdUtils {
     private static final String JS_SHIM =
         "var adnSdkShim = new Object();\n" +
-        "adnSdkShim.onVisible = function(args) {\n" +
-        "   //console.log(\"onVisible:\" + JSON.stringify(args))\n" +
+        "adnSdkShim.onDimsEvent = function(type, response) {\n" +
+        "   if (response.hasOwnProperty('ads') && response.ads[0]) {\n" +
+        "       var ad = response.ads[0]\n" +
+        "       if (ad.hasOwnProperty('dims') && ad.hasOwnProperty('definedDims')) {\n" +
+
+        "           intAndroidAdnuntius.onComplete(\n" +
+        "               type,\n" +
+        "               response.retAdCount || 0,\n" +
+        "               ad.dims.w || 0,\n" +
+        "               ad.dims.h || 0,\n" +
+        "               ad.definedDims.w || 0,\n" +
+        "               ad.definedDims.h || 0,\n" +
+        "               ad.lineItemId || \"\",\n" +
+        "               ad.creativeId || \"\"\n" +
+        "           )\n" +
+        "       }\n" +
+        "   }\n" +
         "}\n" +
-        "adnSdkShim.onRestyle = function(args) {\n" +
-        "   //console.log(\"onRestyle:\" + JSON.stringify(args))\n" +
+        "adnSdkShim.onVisible = function(response) {\n" +
+        "   //console.log(\"onVisible:\" + JSON.stringify(response))\n" +
         "}\n" +
-        "adnSdkShim.onViewable = function(args) {\n" +
-        "   //console.log(\"onViewable:\" + JSON.stringify(args))\n" +
+        "adnSdkShim.onRestyle = function(response) {\n" +
+        "   //console.log(\"onRestyle:\" + JSON.stringify(response))\n" +
+        "   adnSdkShim.onDimsEvent(\"restyle\", response)\n" +
         "}\n" +
-        "adnSdkShim.onPageLoad = function(args) {\n" +
-        "  intAndroidAdnuntius.onComplete(args.retAdCount);\n" +
+        "adnSdkShim.onViewable = function(response) {\n" +
+        "   //console.log(\"onViewable:\" + JSON.stringify(response))\n" +
         "}\n" +
-        "adnSdkShim.onNoMatchedAds = function(args) {\n" +
+        "adnSdkShim.onPageLoad = function(response) {\n" +
+        "   //console.log(\"onPageLoad:\" + JSON.stringify(response))\n" +
+        "   adnSdkShim.onDimsEvent(\"pageLoad\", response)\n" +
+        "}\n" +
+        "adnSdkShim.onNoMatchedAds = function(response) {\n" +
         "  intAndroidAdnuntius.onComplete(0);\n" +
         "}\n" +
-        "adnSdkShim.onError = function(args) {\n" +
+        "adnSdkShim.onImpressionResponse = function(response) {\n" +
+        "   //console.log(\"onImpressionResponse:\" + JSON.stringify(response))\n" +
+        "}\n" +
+        "adnSdkShim.onError = function(response) {\n" +
         // this is a XMLHttpRequest object with a failed response from adn.js
-        "   if (args.hasOwnProperty('args') && args['args'][0]) {\n" +
-        "       var object = args['args'][0]\n" +
+        "   if (response.hasOwnProperty('args') && response.args[0]) {\n" +
+        "       var object = response.args[0]\n" +
         "       if ('response' in object && 'status' in object) {\n" +
         "           intAndroidAdnuntius.onFailure(object['status'], object['response'])\n" +
         "       }\n" +
         "   }\n" +
-        "}\n" +
-        "adnSdkShim.onImpressionResponse = function(args) {\n" +
-        "   //console.log(\"onImpressionResponse:\" + JSON.stringify(args))\n" +
-        "}";
+        "}\n";
 
     private AdUtils() {
     }
