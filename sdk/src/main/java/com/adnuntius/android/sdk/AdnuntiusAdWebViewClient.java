@@ -15,10 +15,10 @@ public class AdnuntiusAdWebViewClient extends WebViewClient {
     private static final String TAG = "AdnuntiusWebViewClient";
 
     private final Context context;
-    private final CompletionHandler handler;
+    private final LoadAdHandler handler;
     private final AdnuntiusEnvironment env;
 
-    public AdnuntiusAdWebViewClient(final Context context, final AdnuntiusEnvironment env, final CompletionHandler handler) {
+    public AdnuntiusAdWebViewClient(final Context context, final AdnuntiusEnvironment env, final LoadAdHandler handler) {
         this.context = context;
         this.env = env;
         this.handler = handler;

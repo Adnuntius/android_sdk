@@ -5,14 +5,14 @@ import android.webkit.JavascriptInterface;
 import com.adnuntius.android.sdk.http.HttpUtils;
 
 public class AdnuntiusJavascriptCallback {
-    private final CompletionHandler handler;
+    private final LoadAdHandler handler;
 
-    public AdnuntiusJavascriptCallback(final CompletionHandler handler) {
+    public AdnuntiusJavascriptCallback(final LoadAdHandler handler) {
         this.handler = handler;
     }
 
     @JavascriptInterface
     public void closeView() {
-        handler.onClose();
+        handler.onLayoutCloseView();
     }
 }
