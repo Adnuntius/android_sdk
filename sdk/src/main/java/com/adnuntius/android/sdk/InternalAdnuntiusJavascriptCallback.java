@@ -7,14 +7,19 @@ import com.adnuntius.android.sdk.http.HttpUtils;
 public class InternalAdnuntiusJavascriptCallback {
     private final LoadAdHandler handler;
     private final AdnuntiusEnvironment env;
+    private final Logger logger;
 
-    public InternalAdnuntiusJavascriptCallback(final AdnuntiusEnvironment env, final LoadAdHandler handler) {
+    public InternalAdnuntiusJavascriptCallback(final AdnuntiusEnvironment env, final LoadAdHandler handler, final Logger logger) {
         this.handler = handler;
         this.env = env;
+        this.logger = logger;
     }
 
     @JavascriptInterface
-    public void onComplete(String type, int adCount, int definedWidth, int definedHeight, int width, int height, String creativeId, String lineItemId) {
+    public void onComplete(String type, int adCount, int definedWidth, int definedHeight, int width,
+                           int height, String creativeId, String lineItemId) {
+        logger.debug("IntAdnJSCallback", "onComplete: {0}", type);
+
         if ("pageLoad".equals(type) && adCount == 0) {
             this.handler.onNoAdResponse();
             return;
@@ -37,6 +42,7 @@ public class InternalAdnuntiusJavascriptCallback {
 
     @JavascriptInterface
     public void onFailure(int httpStatus, String statusMessage) {
+        logger.debug("IntAdnJSCallback", "onFailure: {0} - {1}", httpStatus, statusMessage);
         this.handler.onFailure(statusMessage + " (" + httpStatus + ") error returned");
     }
 }

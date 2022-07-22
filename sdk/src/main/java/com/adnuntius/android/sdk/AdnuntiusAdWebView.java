@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.util.AttributeSet;
+import android.view.View;
 import android.webkit.WebView;
 
 import com.adnuntius.android.sdk.http.HttpUtils;
@@ -36,22 +37,26 @@ public class AdnuntiusAdWebView extends WebView {
         this.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         this.getSettings().setDomStorageEnabled(true);
         this.getSettings().setAllowFileAccess(false);
-        AdnuntiusAdWebViewClient webClient = new AdnuntiusAdWebViewClient(context, env, wrapper);
+        AdnuntiusAdWebViewClient webClient = new AdnuntiusAdWebViewClient(context, env, wrapper, logger);
         this.setWebViewClient(webClient);
-        AdnuntiusAdWebViewChromeClient chromeClient = new AdnuntiusAdWebViewChromeClient(wrapper);
+        AdnuntiusAdWebViewChromeClient chromeClient = new AdnuntiusAdWebViewChromeClient(wrapper, logger);
         this.setWebChromeClient(chromeClient);
 
-        this.addJavascriptInterface(new InternalAdnuntiusJavascriptCallback(env, wrapper), "intAndroidAdnuntius");
-        this.addJavascriptInterface(new AdnuntiusJavascriptCallback(wrapper), "androidAdnuntius");
+        this.addJavascriptInterface(new InternalAdnuntiusJavascriptCallback(env, wrapper, logger), "intAndroidAdnuntius");
+        this.addJavascriptInterface(new AdnuntiusJavascriptCallback(wrapper, logger), "androidAdnuntius");
 
         // make the name compatible with the iOS sdk
-        this.addJavascriptInterface(new AdnuntiusJavascriptCallback(wrapper), "adnSdkHandler");
+        this.addJavascriptInterface(new AdnuntiusJavascriptCallback(wrapper, logger), "adnSdkHandler");
 
         // https://stackoverflow.com/a/23844693
         boolean isDebuggable = ( 0 != ( context.getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE ) );
         if (isDebuggable) {
             WebView.setWebContentsDebuggingEnabled(true);
         }
+    }
+
+    public Logger getLogger() {
+        return logger;
     }
 
     /**
@@ -93,9 +98,9 @@ public class AdnuntiusAdWebView extends WebView {
 
         final String adUnitsJson = gson.toJson(request).replace('"', '\'');
         final String adScript = AdUtils.getAdScript(env, request, adUnitsJson, logger.isDebugEnabled());
-        logger.debug("Ad Script: " + adScript);
+        logger.verbose("loadAd", "Ad Script: [{0}]", adScript);
         final String baseUrl = HttpUtils.getDeliveryUrl(env, request.livePreview());
-        logger.debug("Base URL: " + baseUrl);
+        logger.debug("loadAd", "Base URL: {0}", baseUrl);
         loadDataWithBaseURL(baseUrl, adScript,"text/html", "UTF-8", null);
     }
 
@@ -106,7 +111,7 @@ public class AdnuntiusAdWebView extends WebView {
      * refer to https://github.com/Adnuntius/android_sdk/wiki/Debug-Web-View
      */
     public void loadBlankPage() {
-        loadDataWithBaseURL(HttpUtils.getDeliveryUrl(env, null), "<html><title>Blank Page</title><body><h1>This page left intentionally blank</h1></body></html>","text/html", "UTF-8", null);
+        loadDataWithBaseURL(HttpUtils.getDeliveryUrl(env, null), "<html><title>Blank Page</title><body></body></html>","text/html", "UTF-8", null);
     }
 
     /**
