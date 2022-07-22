@@ -49,7 +49,7 @@ public class AdConfigTest extends Assert {
         assertEquals("sports", jsonArray.get(0).getAsString());
         assertEquals("casinos", jsonArray.get(1).getAsString());
 
-        final String adScript = AdUtils.getAdScript(production, cfg, script);
+        final String adScript = AdUtils.getAdScript(production, cfg, script, false);
         assertTrue(adScript.contains("useCookies: false,"));
         assertFalse(adScript.contains("userId: "));
         assertFalse(adScript.contains("consentString: "));
@@ -68,7 +68,7 @@ public class AdConfigTest extends Assert {
                 .consentString("my consent string")
                 .globalParameter("gdpr", "1");
 
-        final String adScript2 = AdUtils.getAdScript(andemu, cfg, script);
+        final String adScript2 = AdUtils.getAdScript(andemu, cfg, script, false);
         assertFalse(adScript2.contains("useCookies: false,"));
         assertTrue(adScript2.contains("userId: \"my user id\","));
         assertTrue(adScript2.contains("userId: \"my user id\","));

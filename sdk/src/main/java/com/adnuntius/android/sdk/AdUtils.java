@@ -40,12 +40,14 @@ final class AdUtils {
         "   adnSdkShim.onDimsEvent(\"pageLoad\", response)\n" +
         "}\n" +
         "adnSdkShim.onNoMatchedAds = function(response) {\n" +
+        "   //console.log(\"onNoMatchedAds:\" + JSON.stringify(response))\n" +
         "  intAndroidAdnuntius.onComplete(0);\n" +
         "}\n" +
         "adnSdkShim.onImpressionResponse = function(response) {\n" +
         "   //console.log(\"onImpressionResponse:\" + JSON.stringify(response))\n" +
         "}\n" +
         "adnSdkShim.onError = function(response) {\n" +
+        "   //console.log(\"onError:\" + JSON.stringify(response))\n" +
         // this is a XMLHttpRequest object with a failed response from adn.js
         "   if (response.hasOwnProperty('args') && response.args[0]) {\n" +
         "       var object = response.args[0]\n" +
@@ -58,19 +60,26 @@ final class AdUtils {
     private AdUtils() {
     }
 
-    static String getAdScript(AdnuntiusEnvironment env, final AdRequest request, final String adUnitsJson) {
+    static String getAdScript(AdnuntiusEnvironment env,
+                              final AdRequest request,
+                              final String adUnitsJson,
+                              final boolean isDebugEnabled) {
         final StringBuilder builder = new StringBuilder();
         for (Map.Entry<String, String> e : request.parentParameters().entrySet()) {
             if (builder.length() > 0) {
                 builder.append(",\n");
             }
-            builder.append("                   " + e.getKey() + ": \"" + e.getValue() + "\"");
+            builder.append("                   ")
+                    .append(e.getKey())
+                    .append(": \"")
+                    .append(e.getValue())
+                    .append("\"");
         }
 
         return "<html>\n" +
                 "<head>\n" +
                 "   <style type=\"text/css\"> html, body { margin: 0px; padding: 0px; } </style>\n" +
-                "   <script type=\"text/javascript\">\n" + JS_SHIM + "\n</script>\n" +
+                "   <script type=\"text/javascript\">\n" + getShimJs(isDebugEnabled) + "\n</script>\n" +
                 "   <script type=\"text/javascript\" src=\"" + getAdnJsUrl(env) + "\" async></script>\n" +
                 "</head>\n" +
                 "   <body>\n" +
@@ -96,6 +105,14 @@ final class AdUtils {
                 "       </script>" +
                 "   </body>\n" +
                 "</html>";
+    }
+
+    private static String getShimJs(final boolean isDebugEnabled) {
+        if (isDebugEnabled) {
+            return JS_SHIM.replace("//console.log", "console.log");
+        } else {
+            return JS_SHIM;
+        }
     }
 
     static String getAdnJsUrl(final AdnuntiusEnvironment env) {
