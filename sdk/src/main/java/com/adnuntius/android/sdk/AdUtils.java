@@ -26,28 +26,28 @@ final class AdUtils {
         "   }\n" +
         "}\n" +
         "adnSdkShim.onVisible = function(response) {\n" +
-        "   //console.log(\"onVisible:\" + JSON.stringify(response))\n" +
+        "   //intAndroidAdnuntius.log(\"onVisible:\" + JSON.stringify(response))\n" +
         "}\n" +
         "adnSdkShim.onRestyle = function(response) {\n" +
-        "   //console.log(\"onRestyle:\" + JSON.stringify(response))\n" +
+        "   //intAndroidAdnuntius.log(\"onRestyle:\" + JSON.stringify(response))\n" +
         "   adnSdkShim.onDimsEvent(\"restyle\", response)\n" +
         "}\n" +
         "adnSdkShim.onViewable = function(response) {\n" +
-        "   //console.log(\"onViewable:\" + JSON.stringify(response))\n" +
+        "   //intAndroidAdnuntius.log(\"onViewable:\" + JSON.stringify(response))\n" +
         "}\n" +
         "adnSdkShim.onPageLoad = function(response) {\n" +
-        "   //console.log(\"onPageLoad:\" + JSON.stringify(response))\n" +
+        "   //intAndroidAdnuntius.log(\"onPageLoad:\" + JSON.stringify(response))\n" +
         "   adnSdkShim.onDimsEvent(\"pageLoad\", response)\n" +
         "}\n" +
         "adnSdkShim.onNoMatchedAds = function(response) {\n" +
-        "   //console.log(\"onNoMatchedAds:\" + JSON.stringify(response))\n" +
-        "  intAndroidAdnuntius.onComplete(0);\n" +
+        "   //intAndroidAdnuntius.log(\"onNoMatchedAds:\" + JSON.stringify(response))\n" +
+        "  adnSdkShim.onComplete(0);\n" +
         "}\n" +
         "adnSdkShim.onImpressionResponse = function(response) {\n" +
-        "   //console.log(\"onImpressionResponse:\" + JSON.stringify(response))\n" +
+        "   //intAndroidAdnuntius.log(\"onImpressionResponse:\" + JSON.stringify(response))\n" +
         "}\n" +
         "adnSdkShim.onError = function(response) {\n" +
-        "   //console.log(\"onError:\" + JSON.stringify(response))\n" +
+        "   //intAndroidAdnuntius.log(\"onError:\" + JSON.stringify(response))\n" +
         // this is a XMLHttpRequest object with a failed response from adn.js
         "   if (response.hasOwnProperty('args') && response.args[0]) {\n" +
         "       var object = response.args[0]\n" +
@@ -109,7 +109,7 @@ final class AdUtils {
 
     private static String getShimJs(final boolean isDebugEnabled) {
         if (isDebugEnabled) {
-            return JS_SHIM.replace("//console.log", "console.log");
+            return JS_SHIM.replace("//intAndroidAdnuntius.log", "intAndroidAdnuntius.log");
         } else {
             return JS_SHIM;
         }

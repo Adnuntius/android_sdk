@@ -45,4 +45,9 @@ public class InternalAdnuntiusJavascriptCallback {
         logger.debug("IntAdnJSCallback", "onFailure: {0} - {1}", httpStatus, statusMessage);
         this.handler.onFailure(statusMessage + " (" + httpStatus + ") error returned");
     }
+
+    @JavascriptInterface
+    public void log(String message) {
+        this.logger.debug("console", message);
+    }
 }
