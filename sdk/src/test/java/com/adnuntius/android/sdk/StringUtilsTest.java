@@ -1,8 +1,14 @@
+/*
+ * Copyright (c) 2022 Adnuntius AS.  All rights reserved.
+ */
 package com.adnuntius.android.sdk;
 
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class StringUtilsTest {
     @Test

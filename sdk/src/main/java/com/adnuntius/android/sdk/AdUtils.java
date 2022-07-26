@@ -1,6 +1,11 @@
+/*
+ * Copyright (c) 2022 Adnuntius AS.  All rights reserved.
+ */
 package com.adnuntius.android.sdk;
 
 import static com.adnuntius.android.sdk.AdnuntiusEnvironment.andemu;
+
+import androidx.annotation.Nullable;
 
 import java.util.Map;
 
@@ -11,7 +16,6 @@ final class AdUtils {
         "   if (response.hasOwnProperty('ads') && response.ads[0]) {\n" +
         "       var ad = response.ads[0]\n" +
         "       if (ad.hasOwnProperty('dims') && ad.hasOwnProperty('definedDims')) {\n" +
-
         "           intAndroidAdnuntius.onComplete(\n" +
         "               type,\n" +
         "               response.retAdCount || 0,\n" +
@@ -26,28 +30,28 @@ final class AdUtils {
         "   }\n" +
         "}\n" +
         "adnSdkShim.onVisible = function(response) {\n" +
-        "   //intAndroidAdnuntius.log(\"onVisible:\" + JSON.stringify(response))\n" +
+        "   //intAndroidAdnuntius.log('onVisible', JSON.stringify(response))\n" +
         "}\n" +
         "adnSdkShim.onRestyle = function(response) {\n" +
-        "   //intAndroidAdnuntius.log(\"onRestyle:\" + JSON.stringify(response))\n" +
+        "   //intAndroidAdnuntius.log('onRestyle', JSON.stringify(response))\n" +
         "   adnSdkShim.onDimsEvent(\"restyle\", response)\n" +
         "}\n" +
         "adnSdkShim.onViewable = function(response) {\n" +
-        "   //intAndroidAdnuntius.log(\"onViewable:\" + JSON.stringify(response))\n" +
+        "   //intAndroidAdnuntius.log('onViewable', JSON.stringify(response))\n" +
         "}\n" +
         "adnSdkShim.onPageLoad = function(response) {\n" +
-        "   //intAndroidAdnuntius.log(\"onPageLoad:\" + JSON.stringify(response))\n" +
+        "   //intAndroidAdnuntius.log('onPageLoad', JSON.stringify(response))\n" +
         "   adnSdkShim.onDimsEvent(\"pageLoad\", response)\n" +
         "}\n" +
         "adnSdkShim.onNoMatchedAds = function(response) {\n" +
-        "   //intAndroidAdnuntius.log(\"onNoMatchedAds:\" + JSON.stringify(response))\n" +
+        "   //intAndroidAdnuntius.log('onNoMatchedAds', JSON.stringify(response))\n" +
         "  adnSdkShim.onComplete(0);\n" +
         "}\n" +
         "adnSdkShim.onImpressionResponse = function(response) {\n" +
-        "   //intAndroidAdnuntius.log(\"onImpressionResponse:\" + JSON.stringify(response))\n" +
+        "   //intAndroidAdnuntius.log('onImpressionResponse', JSON.stringify(response))\n" +
         "}\n" +
         "adnSdkShim.onError = function(response) {\n" +
-        "   //intAndroidAdnuntius.log(\"onError:\" + JSON.stringify(response))\n" +
+        "   //intAndroidAdnuntius.log('onError', JSON.stringify(response))\n" +
         // this is a XMLHttpRequest object with a failed response from adn.js
         "   if (response.hasOwnProperty('args') && response.args[0]) {\n" +
         "       var object = response.args[0]\n" +
@@ -61,6 +65,7 @@ final class AdUtils {
     }
 
     static String getAdScript(AdnuntiusEnvironment env,
+                              @Nullable final String adId,
                               final AdRequest request,
                               final String adUnitsJson,
                               final boolean isDebugEnabled) {
@@ -76,6 +81,10 @@ final class AdUtils {
                     .append("\"");
         }
 
+        final String externalId = adId != null ? "'" + adId + "'" : "null";
+        final String impReg = adId != null ? "manual" : "auto";
+        final String versionDebug = isDebugEnabled ? "intAndroidAdnuntius.version(adn.version)" : "// no version";
+
         return "<html>\n" +
                 "<head>\n" +
                 "   <style type=\"text/css\"> html, body { margin: 0px; padding: 0px; } </style>\n" +
@@ -87,9 +96,12 @@ final class AdUtils {
                 "       <script type=\"text/javascript\">\n" +
                 "           window.adn = window.adn || {}; adn.calls = adn.calls || [];\n" +
                 "           adn.calls.push(function() {\n" +
+                "               " + versionDebug + ",\n" +
                 "               adn.request({\n" +
                 "                   env: '" + env.name() + "',\n" +
                 "                   sdk: 'android:" + BuildConfig.VERSION_NAME + "',\n" +
+                "                   impReg: '" + impReg + "',\n" +
+                "                   externalId: " + externalId + ",\n" +
                 "                   onPageLoad: adnSdkShim.onPageLoad,\n" +
                 "                   onImpressionResponse: adnSdkShim.onImpressionResponse,\n" +
                 "                   onNoMatchedAds: adnSdkShim.onNoMatchedAds,\n" +

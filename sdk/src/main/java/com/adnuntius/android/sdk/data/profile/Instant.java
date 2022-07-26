@@ -1,3 +1,6 @@
+/*
+ * Copyright (c) 2022 Adnuntius AS.  All rights reserved.
+ */
 package com.adnuntius.android.sdk.data.profile;
 
 import java.util.Calendar;
@@ -20,7 +23,6 @@ public class Instant {
         return new Instant(cal);
     }
 
-    // 2021-04-16T03:07:38.221Z
     public String toString() {
         return paddedString(cal.get(Calendar.YEAR), 4)
         + "-"

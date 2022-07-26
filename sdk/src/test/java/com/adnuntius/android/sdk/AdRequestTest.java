@@ -1,3 +1,6 @@
+/*
+ * Copyright (c) 2022 Adnuntius AS.  All rights reserved.
+ */
 package com.adnuntius.android.sdk;
 
 import static com.adnuntius.android.sdk.AdnuntiusEnvironment.andemu;
@@ -10,7 +13,7 @@ import com.google.gson.JsonObject;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class AdConfigTest extends Assert {
+public class AdRequestTest extends Assert {
     private final Gson gson = new Gson();
 
     @Test
@@ -49,13 +52,15 @@ public class AdConfigTest extends Assert {
         assertEquals("sports", jsonArray.get(0).getAsString());
         assertEquals("casinos", jsonArray.get(1).getAsString());
 
-        final String adScript = AdUtils.getAdScript(production, cfg, script, false);
+        final String adScript = AdUtils.getAdScript(production, null, cfg, script, false);
         assertTrue(adScript.contains("useCookies: false,"));
         assertFalse(adScript.contains("userId: "));
         assertFalse(adScript.contains("consentString: "));
         assertTrue(adScript.contains("src=\"" + AdUtils.getAdnJsUrl(production) + "\""));
         assertFalse(adScript.contains("sessionId: "));
         assertFalse(adScript.contains("'useCookies':false"));
+        assertTrue(adScript.contains("impReg: 'auto'"));
+        assertTrue(adScript.contains("externalId: null"));
         assertTrue(adScript.contains("'auId':'0000000000023ae5'"));
         assertTrue(adScript.contains("id=\"adn-0000000000023ae5\""));
         assertTrue(adScript.contains("'kv':{'car':['toyota','ford']"));
@@ -68,7 +73,7 @@ public class AdConfigTest extends Assert {
                 .consentString("my consent string")
                 .globalParameter("gdpr", "1");
 
-        final String adScript2 = AdUtils.getAdScript(andemu, cfg, script, false);
+        final String adScript2 = AdUtils.getAdScript(andemu, "myadid", cfg, script, false);
         assertFalse(adScript2.contains("useCookies: false,"));
         assertTrue(adScript2.contains("userId: \"my user id\","));
         assertTrue(adScript2.contains("userId: \"my user id\","));
@@ -76,6 +81,8 @@ public class AdConfigTest extends Assert {
         assertTrue(adScript2.contains("consentString: \"my consent string\","));
         assertTrue(adScript2.contains("src=\"" + AdUtils.getAdnJsUrl(andemu) + "\""));
         assertFalse(adScript2.contains("'useCookies':false"));
+        assertTrue(adScript2.contains("impReg: 'manual'"));
+        assertTrue(adScript2.contains("externalId: 'myadid'"));
         assertTrue(adScript2.contains("'auId':'0000000000023ae5'"));
         assertTrue(adScript2.contains("id=\"adn-0000000000023ae5\""));
         assertTrue(adScript2.contains("'kv':{'car':['toyota','ford']"));

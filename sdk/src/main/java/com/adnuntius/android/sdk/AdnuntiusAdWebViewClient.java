@@ -1,3 +1,6 @@
+/*
+ * Copyright (c) 2022 Adnuntius AS.  All rights reserved.
+ */
 package com.adnuntius.android.sdk;
 
 import android.content.Context;
@@ -49,7 +52,6 @@ public class AdnuntiusAdWebViewClient extends WebViewClient {
             logger.debug("shouldInterceptRequest", "URL: {0}", url);
 
             final String path = url.getPath() == null ? null : url.getPath();
-            // just a bit of overkill to avoid npe
             if (path != null && path.endsWith("/favicon.ico")) {
                 try {
                     return new WebResourceResponse("image/png", null, null);
