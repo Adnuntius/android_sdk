@@ -1,3 +1,6 @@
+/*
+ * Copyright (c) 2022 Adnuntius AS.  All rights reserved.
+ */
 package com.adnuntius.android.sdk;
 
 @Deprecated
@@ -9,22 +12,22 @@ public class LoadAdCompletionHandlerAdaptor implements LoadAdHandler {
     }
 
     @Override
-    public void onFailure(String message) {
+    public void onFailure(final AdnuntiusAdWebView view, String message) {
         delegate.onFailure(message);
     }
 
     @Override
-    public void onNoAdResponse() {
+    public void onNoAdResponse(final AdnuntiusAdWebView view) {
         delegate.onComplete(0);
     }
 
     @Override
-    public void onAdResponse(final AdResponseInfo info) {
+    public void onAdResponse(final AdnuntiusAdWebView view, final AdResponseInfo info) {
         delegate.onComplete(1);
     }
 
     @Override
-    public void onLayoutCloseView() {
+    public void onLayoutCloseView(final AdnuntiusAdWebView view) {
         delegate.onClose();
     }
 }

@@ -1,3 +1,6 @@
+/*
+ * Copyright (c) 2022 Adnuntius AS.  All rights reserved.
+ */
 package com.adnuntius.android.sdk.http.volley;
 
 import com.adnuntius.android.sdk.AdnuntiusEnvironment;

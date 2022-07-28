@@ -1,3 +1,6 @@
+/*
+ * Copyright (c) 2022 Adnuntius AS.  All rights reserved.
+ */
 package com.adnuntius.android.sdk.http.volley;
 
 import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
@@ -27,7 +30,6 @@ public class VolleyHttpClientGetRequestTest {
     @Test
     public void testQueryAdnJsOnIpAddress() {
         final String url = "http://10.0.2.2:8001/adn.src.js?script-override=andemu";
-        //final String url = "https://adnuntius.github.io/examples/adn/adn.dev.src.js";
         Log.i(TAG, "The url is " + url);
         httpClient.getRequest(url, handler);
         handler.waitForMessages(1);
