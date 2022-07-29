@@ -77,7 +77,7 @@ public class AdClient {
                 });
     }
 
-    private static AdResponse getAdFromDeliveryResponse(JsonObject response) {
+    private static AdResponse getAdFromDeliveryResponse(final JsonObject response) {
         final JsonArray jArr = response.getAsJsonArray("adUnits");
         if (jArr.size() > 0) {
             final JsonObject ad = jArr.get(0).getAsJsonObject();

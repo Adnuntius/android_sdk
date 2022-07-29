@@ -21,7 +21,7 @@ public class DefaultVolleyResponseHandler implements VolleyResponseHandler {
     }
 
     @Override
-    public void onErrorResponse(VolleyError error) {
+    public void onErrorResponse(final VolleyError error) {
         if (error.networkResponse != null) {
             final String responseData = toString(error.networkResponse);
 
@@ -46,7 +46,7 @@ public class DefaultVolleyResponseHandler implements VolleyResponseHandler {
     }
 
     @Override
-    public void onResponse(String response) {
+    public void onResponse(final String response) {
         // always a valid json response is returned
         if (response == null || response.isEmpty() || response.trim().isEmpty()) {
             handler.onSuccess(isJson ? "{}" : "");

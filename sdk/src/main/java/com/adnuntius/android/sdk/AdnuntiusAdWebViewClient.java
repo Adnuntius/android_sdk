@@ -31,7 +31,7 @@ public class AdnuntiusAdWebViewClient extends WebViewClient {
     }
 
     @Override
-    public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+    public boolean shouldOverrideUrlLoading(final WebView view, final WebResourceRequest request) {
         final Uri url = request.getUrl() == null ? null : request.getUrl();
         if (url != null) {
             logger.debug("shouldOverrideUrlLoading", "URL: {0}", url);
@@ -46,7 +46,7 @@ public class AdnuntiusAdWebViewClient extends WebViewClient {
     }
 
     @Override
-    public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
+    public WebResourceResponse shouldInterceptRequest(final WebView view, final WebResourceRequest request) {
         final Uri url = request.getUrl() == null ? null : request.getUrl();
         if (url != null) {
             logger.debug("shouldInterceptRequest", "URL: {0}", url);

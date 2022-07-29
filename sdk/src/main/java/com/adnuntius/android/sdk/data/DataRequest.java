@@ -19,7 +19,7 @@ public abstract class DataRequest {
      *
      * @param browserId
      */
-    public void setBrowserId(String browserId) {
+    public void setBrowserId(final String browserId) {
         StringUtils.validateNotBlank(browserId);
         this.browserId = browserId;
     }
@@ -29,7 +29,7 @@ public abstract class DataRequest {
      *
      * @param folderId
      */
-    public void setFolderId(String folderId) {
+    public void setFolderId(final String folderId) {
         StringUtils.validateNotBlank(folderId);
         this.folderId = folderId;
     }

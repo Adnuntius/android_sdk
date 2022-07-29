@@ -64,7 +64,7 @@ final class AdUtils {
     private AdUtils() {
     }
 
-    static String getAdScript(AdnuntiusEnvironment env,
+    static String getAdScript(final AdnuntiusEnvironment env,
                               @Nullable final String adId,
                               final AdRequest request,
                               final String adUnitsJson,

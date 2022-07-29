@@ -95,18 +95,18 @@ public class DataClient {
                 });
     }
 
-    private void validateDataRequest(DataRequest dataRequest) {
+    private void validateDataRequest(final DataRequest dataRequest) {
         if (dataRequest.getBrowserId() == null || dataRequest.getFolderId() == null) {
             throw new IllegalArgumentException("Both BrowserId and FolderId are required");
         }
     }
 
-    private void submit(DataRequest request, final DataResponseHandler handler) {
+    private void submit(final DataRequest request, final DataResponseHandler handler) {
         final JsonObject jsonObject = (JsonObject) gson.toJsonTree(request);
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
             final TimeZone tz = TimeZone.getDefault();
-            int offsetFromUtc = tz.getRawOffset() / (1000 * 60);
+            final int offsetFromUtc = tz.getRawOffset() / (1000 * 60);
             jsonObject.add("userTimezone", new JsonPrimitive(offsetFromUtc + ""));
         }
         jsonObject.add("occurredAt", new JsonPrimitive(System.currentTimeMillis()));

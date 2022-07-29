@@ -38,12 +38,12 @@ public class AdRequest {
         return auId;
     }
 
-    public AdRequest setWidth(String auW) {
+    public AdRequest setWidth(final String auW) {
         this.auW = auW;
         return this;
     }
 
-    public AdRequest setHeight(String auH) {
+    public AdRequest setHeight(final String auH) {
         this.auH = auH;
         return this;
     }

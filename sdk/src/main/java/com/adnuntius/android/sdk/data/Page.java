@@ -53,7 +53,7 @@ public class Page extends DataRequest {
     /**
      * @param keywords
      */
-    public void addKeywords(String ... keywords) {
+    public void addKeywords(final String ... keywords) {
         StringUtils.validateNotBlank(keywords);
         if (this.keywords == null) {
             this.keywords = new ArrayList<>();
@@ -69,7 +69,7 @@ public class Page extends DataRequest {
      *
      * @param categories
      */
-    public void addCategories(String ... categories) {
+    public void addCategories(final String ... categories) {
         if (this.categories == null) {
             this.categories = new ArrayList<>(categories.length);
         }
@@ -85,7 +85,7 @@ public class Page extends DataRequest {
      *
      * @param domainName
      */
-    public void setDomainName(String domainName) {
+    public void setDomainName(final String domainName) {
         StringUtils.validateNotBlank(domainName);
         this.domainName = domainName;
     }

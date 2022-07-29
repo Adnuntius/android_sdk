@@ -6,7 +6,7 @@ package com.adnuntius.android.sdk;
 public class LoadAdHandlerWrapper implements LoadAdHandler {
     private LoadAdHandler delegate;
 
-    public void setDelegate(LoadAdHandler handler) {
+    public void setDelegate(final LoadAdHandler handler) {
         if (handler == null) {
             throw new IllegalArgumentException("Handler cannot be null");
         }
@@ -14,7 +14,7 @@ public class LoadAdHandlerWrapper implements LoadAdHandler {
     }
 
     @Override
-    public void onFailure(final AdnuntiusAdWebView view, String message) {
+    public void onFailure(final AdnuntiusAdWebView view, final String message) {
         delegate.onFailure(view, message);
     }
 
@@ -24,12 +24,12 @@ public class LoadAdHandlerWrapper implements LoadAdHandler {
     }
 
     @Override
-    public void onAdResponse(final AdnuntiusAdWebView view, AdResponseInfo info) {
+    public void onAdResponse(final AdnuntiusAdWebView view, final AdResponseInfo info) {
         delegate.onAdResponse(view, info);
     }
 
     @Override
-    public void onAdResize(final AdnuntiusAdWebView view, AdResponseInfo info) {
+    public void onAdResize(final AdnuntiusAdWebView view, final AdResponseInfo info) {
         delegate.onAdResize(view, info);
     }
 

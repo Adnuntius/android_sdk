@@ -25,7 +25,7 @@ public class Logger {
         return this;
     }
 
-    public void debug(String context, String msg) {
+    public void debug(final String context, final String msg) {
         if (debug) {
             // ya I know its not debug, but when debug is enabled, I want to be
             // sure I always get the messages even when using the sdk from a aar
@@ -33,32 +33,32 @@ public class Logger {
         }
     }
 
-    public void debug(String context, String msg, Object arg) {
+    public void debug(final String context, final String msg, final Object arg) {
         if (debug) {
             log(context, msg.replace("{0}", arg.toString()));
         }
     }
 
-    public void verbose(String context, String msg, String arg) {
+    public void verbose(final String context, final String msg, final String arg) {
         if (verbose) {
             log(context, msg.replace("{0}", arg));
         }
     }
 
-    public void debug(String context, String msg, String arg) {
+    public void debug(final String context, final String msg, final String arg) {
         if (debug) {
             log(context, msg.replace("{0}", arg));
         }
     }
 
-    public void debug(String context, String msg, int arg, String arg2) {
+    public void debug(final String context, final String msg, final int arg, final String arg2) {
         if (debug) {
             log(context, msg.replace("{0}", String.valueOf(arg)
                     .replace("{1}", String.valueOf(arg2))));
         }
     }
 
-    private void log(String context, String msg) {
+    private void log(final String context, final String msg) {
         Log.i(id, context + " " + msg);
     }
 

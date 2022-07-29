@@ -7,11 +7,11 @@ public final class StringUtils {
     private StringUtils() {
     }
 
-    public static String paddedString(int v, int size) {
+    public static String paddedString(final int v, final int size) {
         return paddedString(v + "", size);
     }
 
-    public static String paddedString(String v, int size) {
+    public static String paddedString(final String v, final int size) {
         if (v.length() >= size) {
             return v;
         }
@@ -28,7 +28,7 @@ public final class StringUtils {
     }
 
 
-    public static void validateNotBlank(String ... values) {
+    public static void validateNotBlank(final String ... values) {
         for (String value : values) {
             if (isBlank(value)) {
                 throw new IllegalArgumentException("Value cannot be null, empty or whitespace only");
@@ -36,7 +36,7 @@ public final class StringUtils {
         }
     }
 
-    public static void validateNotBlank(Object value) {
+    public static void validateNotBlank(final Object value) {
         if (value == null) {
             throw new IllegalArgumentException("Value cannot be null");
         }

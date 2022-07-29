@@ -13,7 +13,7 @@ public class AdRequests {
 
     }
 
-    public AdRequests(AdRequest request) {
+    public AdRequests(final AdRequest request) {
         adUnits.add(request);
     }
 

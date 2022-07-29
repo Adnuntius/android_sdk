@@ -73,74 +73,82 @@ public class RectUtilsTest {
     public void test99Intersect() {
         final Rect container = new Rect(0, 2, 1080, 1930);
         final Rect view = new Rect(0, 0, 825, 500);
-        assertEquals(99, RectUtils.percentageContains(container, view));
+        assertEquals(99, percentageContains(container, view));
     }
 
     @Test
     public void test100Intersect() {
         final Rect container = new Rect(0, 0, 1080, 1930);
         final Rect view = new Rect(0, 0, 825, 500);
-        assertEquals(100, RectUtils.percentageContains(container, view));
+        assertEquals(100, percentageContains(container, view));
     }
 
     @Test
     public void testExactIntersect() {
         final Rect container = new Rect(0, 0, 300, 600);
         final Rect view = new Rect(0, 0, 300, 600);
-        assertEquals(100, RectUtils.percentageContains(container, view));
+        assertEquals(100, percentageContains(container, view));
     }
 
     @Test
     public void test50PctContains() {
         final Rect frame = new Rect(0, 0, 300, 600);
-        assertEquals(50, RectUtils.percentageContains(frame, new Rect( 150, 300, 450, 600)));
+        assertEquals(50, percentageContains(frame, new Rect( 150, 300, 450, 600)));
     }
 
     @Test
     public void test25PctContains() {
         final Rect frame = new Rect(0, 0, 300, 600);
-        assertEquals(25, RectUtils.percentageContains(frame, new Rect(150, 450, 450, 750)));
+        assertEquals(25, percentageContains(frame, new Rect(150, 450, 450, 750)));
     }
 
     @Test
     public void test16PctContains() {
         final Rect frame = new Rect(0, 0, 300, 600);
-        assertEquals(16, RectUtils.percentageContains(frame, new Rect(150, 500, 450, 800)));
+        assertEquals(16, percentageContains(frame, new Rect(150, 500, 450, 800)));
     }
 
     @Test
     public void test8PctContains() {
         final Rect frame = new Rect(0, 0, 300, 600);
-        assertEquals(8, RectUtils.percentageContains(frame, new Rect(150, 500, 750, 800)));
+        assertEquals(8, percentageContains(frame, new Rect(150, 500, 750, 800)));
     }
 
     @Test
     public void test4PctContains() {
         final Rect frame = new Rect(0, 0, 300, 600);
-        assertEquals(4, RectUtils.percentageContains(frame, new Rect(150, 550, 750, 850)));
+        assertEquals(4, percentageContains(frame, new Rect(150, 550, 750, 850)));
     }
 
     @Test
     public void testNoPctContains() {
         final Rect frame = new Rect(0, 0, 300, 600);
-        assertEquals(0, RectUtils.percentageContains(frame, new Rect(300, 550, 900, 850)));
+        assertEquals(0, percentageContains(frame, new Rect(300, 550, 900, 850)));
     }
 
     @Test
     public void testNoPct2Contains() {
         final Rect frame = new Rect(0, 0, 300, 600);
-        assertEquals(0, RectUtils.percentageContains(frame, new Rect(150, 600, 750, 900)));
+        assertEquals(0, percentageContains(frame, new Rect(150, 600, 750, 900)));
     }
 
     @Test
     public void testNoPct3Contains() {
         final Rect frame = new Rect(0, 0, 300, 600);
-        assertEquals(0, RectUtils.percentageContains(frame, new Rect(299, 600, 899, 900)));
+        assertEquals(0, percentageContains(frame, new Rect(299, 600, 899, 900)));
     }
 
     @Test
     public void testNoPct4Contains() {
         final Rect frame = new Rect(0, 0, 300, 600);
-        assertEquals(1, RectUtils.percentageContains(frame, new Rect(299, 599, 899, 999)));
+        assertEquals(1, percentageContains(frame, new Rect(299, 599, 899, 999)));
+    }
+
+    private int percentageContains(final Rect container, final Rect childView) {
+        final Rect intersection = RectUtils.intersection(container, childView);
+        if (intersection != null) {
+            return RectUtils.percentageContains(childView, intersection);
+        }
+        return 0;
     }
 }

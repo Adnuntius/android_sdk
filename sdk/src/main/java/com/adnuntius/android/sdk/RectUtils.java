@@ -21,15 +21,7 @@ public class RectUtils {
         }
     }
 
-    public static int percentageContains(final Rect container, final Rect childView) {
-        final Rect intersection = intersection(container, childView);
-        if (intersection != null) {
-            return percentageContains(container, childView, intersection);
-        }
-        return 0;
-    }
-
-    public static int percentageContains(final Rect container, final Rect childView, final Rect intersection) {
+    public static int percentageContains(final Rect childView, final Rect intersection) {
         if (intersection.height() > 0 && intersection.width() > 0) {
             final int viewArea = childView.width() * childView.height();
             final int intersectArea = intersection.width() * intersection.height();

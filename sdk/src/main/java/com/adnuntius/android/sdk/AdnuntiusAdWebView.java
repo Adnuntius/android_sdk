@@ -126,7 +126,7 @@ public class AdnuntiusAdWebView extends WebView {
 
      Currently is supported for ScrollView only.
      */
-    public void updateView(ScrollView scrollView) {
+    public void updateView(final ScrollView scrollView) {
         if (this.adId == null) {
             this.logger.debug("updateView", "loadAd not called or delayViewEvents=false");
             return;
@@ -140,7 +140,7 @@ public class AdnuntiusAdWebView extends WebView {
         getDrawingRect(childRect);
         if (scrollView.getGlobalVisibleRect(scrollBounds)) {
             if (getGlobalVisibleRect(intersection)) {
-                final int percentage = RectUtils.percentageContains(scrollBounds, childRect, intersection);
+                final int percentage = RectUtils.percentageContains(childRect, intersection);
                 this.logger.debug("updateView", "Percentage {0}", percentage);
                 if (percentage > 0 && !this.hasVisibleCalled) {
                     this.hasVisibleCalled = true;

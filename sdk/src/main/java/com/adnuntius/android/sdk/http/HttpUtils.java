@@ -22,11 +22,11 @@ public class HttpUtils {
         }
     }
 
-    public static String getDeliveryUrl(final AdnuntiusEnvironment env, @Nullable LivePreview livePreview) {
+    public static String getDeliveryUrl(final AdnuntiusEnvironment env, @Nullable final LivePreview livePreview) {
         return getDeliveryUrl(env, "", livePreview);
     }
 
-    public static String getDeliveryUrl(final AdnuntiusEnvironment env, String target, @Nullable LivePreview livePreview) {
+    public static String getDeliveryUrl(final AdnuntiusEnvironment env, final String target, @Nullable final LivePreview livePreview) {
         final String baseUrl;
         // for now we are testing with ads on production, probably should change to using local dev env just like for cdn.js
         if (env == production) {
@@ -54,11 +54,11 @@ public class HttpUtils {
      * @param sync use the synchronous visitor api endpoint
      * @return
      */
-    public static String getDataUrl(AdnuntiusEnvironment env, final DataTarget target, final boolean sync) {
+    public static String getDataUrl(final AdnuntiusEnvironment env, final DataTarget target, final boolean sync) {
         return getDataUrlPrefix(env) + (target.equals(DataTarget.visitor) && sync ? "/synchronous/" : "/") + target.name() + "?sdk=android:" + BuildConfig.VERSION_NAME;
     }
 
-    private static String getDataUrlPrefix(AdnuntiusEnvironment env) {
+    private static String getDataUrlPrefix(final AdnuntiusEnvironment env) {
         if (env == production) {
             return "https://data.adnuntius.com";
         } else {

@@ -16,7 +16,7 @@ public class RequestQueueSingleton implements HttpRequestQueue {
 
     private final Context ctx;
 
-    public RequestQueueSingleton(Context ctx) {
+    public RequestQueueSingleton(final Context ctx) {
         this.ctx = ctx;
         requestQueue = getRequestQueue();
     }
@@ -30,7 +30,7 @@ public class RequestQueueSingleton implements HttpRequestQueue {
         return requestQueue;
     }
 
-    public static synchronized RequestQueueSingleton getInstance(Context context) {
+    public static synchronized RequestQueueSingleton getInstance(final Context context) {
         if (instance == null) {
             instance = new RequestQueueSingleton(context);
         }
@@ -38,7 +38,7 @@ public class RequestQueueSingleton implements HttpRequestQueue {
     }
 
     @Override
-    public <T> void add(Request<T> req) {
+    public <T> void add(final Request<T> req) {
         getRequestQueue().add(req);
     }
 }

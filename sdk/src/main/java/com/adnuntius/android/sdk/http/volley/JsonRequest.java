@@ -53,7 +53,7 @@ public class JsonRequest extends com.android.volley.toolbox.JsonRequest<String> 
     }
 
     @Override
-    protected Response<String> parseNetworkResponse(NetworkResponse response) {
+    protected Response<String> parseNetworkResponse(final NetworkResponse response) {
         try {
             final String jsonString =
                     new String(response.data,

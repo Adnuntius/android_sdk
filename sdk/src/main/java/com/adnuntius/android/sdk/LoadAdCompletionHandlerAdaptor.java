@@ -12,7 +12,7 @@ public class LoadAdCompletionHandlerAdaptor implements LoadAdHandler {
     }
 
     @Override
-    public void onFailure(final AdnuntiusAdWebView view, String message) {
+    public void onFailure(final AdnuntiusAdWebView view, final String message) {
         delegate.onFailure(message);
     }
 
