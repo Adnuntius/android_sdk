@@ -21,8 +21,7 @@ public class InternalAdnuntiusJavascriptCallback {
     }
 
     @JavascriptInterface
-    public void onComplete(final String type, final int adCount, final int definedWidth, final int definedHeight, final int width,
-                           final int height, final String creativeId, final String lineItemId) {
+    public void onComplete(final String type, final int adCount, final int width, final int height, final int definedWidth, final int definedHeight, final String creativeId, final String lineItemId) {
         logger.debug("IntAdnJSCallback", "onComplete: {0}", type);
 
         if ("pageLoad".equals(type) && adCount == 0) {
@@ -43,6 +42,11 @@ public class InternalAdnuntiusJavascriptCallback {
         } else { // assumes all other events are resize events
             this.handler.onAdResize(view, response);
         }
+    }
+
+    @JavascriptInterface
+    public void onNoMatchedAds() {
+        this.handler.onNoAdResponse(view);
     }
 
     @JavascriptInterface

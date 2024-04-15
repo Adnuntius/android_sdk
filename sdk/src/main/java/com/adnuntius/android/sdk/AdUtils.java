@@ -45,7 +45,7 @@ final class AdUtils {
         "}\n" +
         "adnSdkShim.onNoMatchedAds = function(response) {\n" +
         "   //intAndroidAdnuntius.log('onNoMatchedAds', JSON.stringify(response))\n" +
-        "  adnSdkShim.onComplete(0);\n" +
+        "  intAndroidAdnuntius.onNoMatchedAds();\n" +
         "}\n" +
         "adnSdkShim.onImpressionResponse = function(response) {\n" +
         "   //intAndroidAdnuntius.log('onImpressionResponse', JSON.stringify(response))\n" +
