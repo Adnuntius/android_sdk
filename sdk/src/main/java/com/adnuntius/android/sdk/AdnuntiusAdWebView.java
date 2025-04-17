@@ -155,7 +155,7 @@ public class AdnuntiusAdWebView extends WebView {
         }
     }
 
-    private void registerEvent(final String event) {
+    public void registerEvent(final String event) {
         this.logger.debug("updateView", "Register Event {0}", event);
 
         final String eventJsScript =

@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
 apply plugin: 'signing'
 
-version = "1.7.2-SNAPSHOT"
+version = "1.7.3"
 
 android {
     compileSdkVersion 32
@@ -91,13 +91,16 @@ afterEvaluate {
 
         repositories {
             maven {
+
                 def releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
                 def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
 
+                name = "OSSRH"
                 url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+
                 credentials {
-                    username sonatypeUsername
-                    password sonatypePassword
+                    username ossrhUsername
+                    password ossrhPassword
                 }
             }
         }
